@@ -21,6 +21,7 @@
     <!-- END GLOBAL MANDATORY STYLES -->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/theme-checkbox-radio.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/forms/switches.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{asset('assets/css/elements/alert.css')}}">
 </head>
 <body class="form">
 
@@ -31,8 +32,10 @@
                     <div class="form-content">
 
                         <h1 class="">Se connecter à <a href="{{route('admin.login')}}"><span class="brand-name">NewBank AdminPanel</span></a></h1>
-                        
-                        <form class="text-left" method="post" action="#">
+                        {{-- @if($error_msg)
+                            <div class="alert alert-light-danger border-0 mb-4" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x close" data-dismiss="alert"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button> <strong>Erreur!</strong> {{$error_msg}} </div>
+                        @endif --}}
+                        <form class="text-left" method="post" action="{{route('admin.postLogin')}}">
                             @csrf
                             <div class="form">
 
@@ -62,7 +65,7 @@
                                 <div class="field-wrapper text-center keep-logged-in">
                                     <div class="n-chk new-checkbox checkbox-outline-primary">
                                         <label class="new-control new-checkbox checkbox-outline-primary">
-                                          <input type="checkbox" class="new-control-input">
+                                          <input type="checkbox" class="new-control-input" name="remember_me" id="remember_me">
                                           <span class="new-control-indicator"></span>Se souvenir de moi
                                         </label>
                                     </div>

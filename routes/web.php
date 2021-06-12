@@ -21,6 +21,12 @@ Auth::routes();
 
 Route::prefix('admin')->group(function () {
     Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showAdminLogin'])->name('admin.login');
+    Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'adminLogin'])->name('admin.postLogin');
+
+    Route::get('/dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin.dashboard');
+
+    Route::get('/account_requests', [App\Http\Controllers\Admin\AccountRequestsController::class, 'index'])->name('admin.account_requests');
+    Route::get('/account_requests/{trackId}', [App\Http\Controllers\Admin\AccountRequestsController::class, 'show'])->name('admin.account_requests.show');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

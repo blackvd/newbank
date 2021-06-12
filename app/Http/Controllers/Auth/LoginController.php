@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -41,5 +42,17 @@ class LoginController extends Controller
 
     public function showAdminLogin(){
         return view('admin.auth.login');
+    }
+
+    public function adminLogin(){
+        $this->validate(request(),[
+            'username' => 'required',
+            'password' => 'required|min:6'
+        ]);
+
+        if(Auth::guard('admin')->attempt(['username' => request()->username, 'password' => request()->password]))
+            return redirect()->intended('/admin/dashboard');
+
+        return back()->withInput(request()->only('username'))->with('error_msg', 'Nom d\'utilisateur ou mot de passe incorrect');
     }
 }

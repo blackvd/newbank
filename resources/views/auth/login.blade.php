@@ -58,6 +58,16 @@
                                     </div>
                                 </div>
 
+                                <div class="division">
+                                    <span>OU</span>
+                              </div>
+
+                              <div class="social">
+                                <a href="javascript:void(0);" class="btn social-fb">
+                                    <span class="brand-name">Première connexion ?</span>
+                                </a>
+                            </div>
+
                                 <p class="signup-link">Pas de compte ? <a href="{{route('new-account')}}">Créer un compte</a></p>
 
                             </div>

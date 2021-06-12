@@ -21,7 +21,7 @@ class Client extends Model
     }
 
     public function identification(){
-        return $this->hasOne(identification::class);
+        return $this->hasOne(Identification::class);
     }
 
     public function comptes(){
