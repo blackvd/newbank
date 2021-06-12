@@ -19,7 +19,7 @@ class CreateIdentificationsTable extends Migration
             $table->string("type_piece", 30);
             $table->string("no_piece", 20);
             $table->datetime("date_expiration_piece");
-            $table->datetime("pays_emission_piece");
+            $table->string("pays_emission_piece");
             $table->string("piece_recto", 30);
             $table->string("piece_verso", 30);
             $table->string("facture_electricite", 30)->nullable(true);

@@ -19,6 +19,7 @@ class CreateComptesTable extends Migration
             $table->string("rib",30);
             $table->integer("solde");
             $table->integer("type_compte");
+            $table->string("customer_num", 8);
             $table->foreignId("client_id");
             $table->timestamps();
         });

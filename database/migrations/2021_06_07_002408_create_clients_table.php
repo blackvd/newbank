@@ -22,7 +22,7 @@ class CreateClientsTable extends Migration
             $table->string("prenoms", 200)->nullable(true);
             $table->date("date_naissance")->nullable(true);
             $table->string("lieu_naissance", 100)->nullable(true);
-            $table->string("nationnalite", 150)->nullable(true);
+            $table->string("nationalite", 150)->nullable(true);
             $table->string("pays_residence", 150)->nullable(true);
             $table->string("ville", 100)->nullable(true);
             $table->string("lieu_residence", 200)->nullable(true);
@@ -34,7 +34,7 @@ class CreateClientsTable extends Migration
             $table->string("profession", 200)->nullable(true);
             $table->string("choix_type_compte", 3);
             $table->string("objet_compte")->nullable(true);
-            $table->integer("etape")->default(0);
+            //$table->integer("etape")->default(0);
             $table->integer("statut_ouverture_compte");
             $table->boolean("accord_termes_conditions")->default(false);
             $table->integer("admin_code")->nullable(true);

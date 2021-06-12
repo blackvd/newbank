@@ -13,8 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/open-account', [App\Http\Controllers\OpenAccountController::class, 'index']);
+Route::get('/open-account', [App\Http\Controllers\OpenAccountController::class, 'index'])->name("new-account");
+Route::post('/open-account', [App\Http\Controllers\OpenAccountController::class, 'openAccount'])->name("open-account");
+Route::get('/open-account/success', [App\Http\Controllers\OpenAccountController::class, 'openAccountSuccess'])->name("open-account-success");
 
 Auth::routes();
+
+Route::prefix('admin')->group(function () {
+    Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'showAdminLogin'])->name('admin.login');
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
