@@ -27,6 +27,8 @@ Route::prefix('admin')->group(function () {
 
     Route::get('/account_requests', [App\Http\Controllers\Admin\AccountRequestsController::class, 'index'])->name('admin.account_requests');
     Route::get('/account_requests/{trackId}', [App\Http\Controllers\Admin\AccountRequestsController::class, 'show'])->name('admin.account_requests.show');
+    Route::post('/account_requests/{trackId}', [App\Http\Controllers\Admin\AccountRequestsController::class, 'changeStatus'])->name('admin.account_requests.change_status');
+    Route::post('/account_requests/activate/{trackId}', [App\Http\Controllers\Admin\AccountRequestsController::class, 'activate'])->name('admin.account_requests.activate_account');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -13,6 +13,7 @@ class Client extends Model
         "EN ATTENTE" => 1,
         "VALIDATION" => 2,
         "OUVERT" => 3,
+        "DESACTIVÉ" => 0,
         "REJÉTÉ" => -1
     ];
 

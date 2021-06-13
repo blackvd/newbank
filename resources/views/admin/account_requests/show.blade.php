@@ -4,6 +4,11 @@
     
 @section('styles')
 <link href="{{asset('assets/css/users/user-profile.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('plugins/animate/animate.css')}}" rel="stylesheet" type="text/css" />
+<script src="{{asset('plugins/sweetalerts/promise-polyfill.js')}}"></script>
+<link href="{{asset('plugins/sweetalerts/sweetalert2.min.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('plugins/sweetalerts/sweetalert.css')}}" rel="stylesheet" type="text/css" />
+<link href="{{asset('assets/css/components/custom-sweetalert.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 
 @section('css-apply-to-body', 'sidebar-noneoverflow')
@@ -15,7 +20,7 @@
             <h3>NewBank</h3>
         </div>
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="javascript:void(0);">Demandes</a></li>
+            <li class="breadcrumb-item"><a href="{{route('admin.account_requests')}}">Demandes</a></li>
             <li class="breadcrumb-item active"  aria-current="page"><a href="javascript:void(0);">Demande {{$account->track_id}}</a></li>
         </ol>
     </nav>
@@ -30,13 +35,32 @@
                 <div class="d-flex justify-content-between">
                     <h3 class="">Informations</h3>
                     <div class="mt-2">
-                        <button class="btn btn-success">
+                        @if($account->statut_ouverture_compte == \App\Models\Client::STATUT['EN ATTENTE'])
+                        <button class="btn btn-success" id="validateBtn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
                         </button>
 
-                        <button class="btn btn-danger">
+                        <button class="btn btn-danger" id="rejectBtn">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
                         </button>
+
+                        <form class="d-none" action="{{route('admin.account_requests.change_status', $account->track_id)}}" id="changeStatusForm" method="post">
+                            @csrf
+                            <input type="text" id="status" name="status">
+                        </form>
+                        @elseif($account->statut_ouverture_compte == \App\Models\Client::STATUT['VALIDATION'])
+                        <button class="btn btn-success" id="activateBtn">
+                            Activer le compte
+                        </button>
+
+                        <form class="d-none" action="{{route('admin.account_requests.activate_account', $account->track_id)}}" id="activateForm" method="post">
+                            @csrf
+                        </form>
+                        @elseif($account->statut_ouverture_compte == \App\Models\Client::STATUT['OUVERT'])
+                        <h6><span class="badge badge-success"> OUVERT </span></h6>
+                        @else
+                        <h6><span class="badge badge-danger"> REJÉTÉ </span></h6>
+                        @endif
                     </div>
                 </div>
                 <div class="text-center user-info">
@@ -95,6 +119,43 @@
     </div>
 
     <div class="col-xl-8 col-lg-6 col-md-7 col-sm-12 layout-top-spacing">
+
+
+        <div class="bio layout-spacing ">
+            <div class="widget-content widget-content-area">
+                <h3 class="">Informations compte(s)</h3>
+                <div class="table-responsive">
+                    <table class="table table-bordered mb-4">
+                        <thead>
+                            <tr>
+                                <th>Numéro de compte</th>
+                                <th>RIB</th>
+                                <th>Solde</th>
+                                <th class="text-center">Type de compte</th>
+                                <th>Identifiant Client</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($account->comptes as $compte)
+                                <tr>
+                                    <td>{{$compte->numero_compte}}</td>
+                                    <td>{{$compte->rib}}</td>
+                                    <td>{{$compte->solde}}</td>
+                                    <td>
+                                        @if($compte->type_compte == \App\Models\Compte::TYPE_COMPTE['EPARGNE'])
+                                        <span class="text-secondary">Compte épargne</span>
+                                        @else
+                                        <span class="text-primary">Compte courant</span>
+                                        @endif
+                                    </td>
+                                    <td>{{$compte->customer_num}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
 
         <div class="skills layout-spacing ">
             <div class="widget-content widget-content-area">
@@ -179,4 +240,58 @@
 @endsection
 
 @section('scripts')
+<script src="{{asset('plugins/sweetalerts/sweetalert2.min.js')}}"></script>
+<script src="{{asset('plugins/sweetalerts/custom-sweetalert.js')}}"></script>
+
+<script>
+    $('#validateBtn').click(function(){
+        swal({
+            title: 'Êtes-vous sûr(e)',
+            text: "Vous vous apprêtez à confirmer l'ouverture de ce compte.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Confirmer',
+            cancelButtonText: 'Annuler',
+            padding: '2em'
+        }).then(function(result) {
+            if (result.value) {
+                $('#status').val(2)
+                $('#changeStatusForm').submit()
+            }
+        })
+    })
+
+    $('#rejectBtn').click(function(){
+        swal({
+            title: 'Êtes-vous sûr(e)',
+            text: "Vous vous apprêtez à annuler l'ouverture de ce compte.",
+            type: 'error',
+            showCancelButton: true,
+            confirmButtonText: 'Confirmer',
+            cancelButtonText: 'Annuler',
+            padding: '2em'
+        }).then(function(result) {
+            if (result.value) {
+                $('#status').val(-1)
+                $('#changeStatusForm').submit()
+            }
+        })
+    })
+
+    $('#activateBtn').click(function(){
+        swal({
+            title: 'Êtes-vous sûr(e)',
+            text: "Vous vous apprêtez à activer ce compte.",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Confirmer',
+            cancelButtonText: 'Annuler',
+            padding: '2em'
+        }).then(function(result) {
+            if (result.value) {
+                $('#activateForm').submit()
+            }
+        })
+    })
+</script>
 @endsection
