@@ -6,19 +6,27 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Compte;
 
 class RequestValidateMail extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
+     * The account instance
+     * 
+     * @var \App\Models\Compte
+     */
+    public $compte;
+
+    /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Compte $compte)
     {
-        //
+        $this->compte = $compte;
     }
 
     /**

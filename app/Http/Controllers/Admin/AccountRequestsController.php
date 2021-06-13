@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Compte;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class AccountRequestsController extends Controller
 {
@@ -53,6 +55,8 @@ class AccountRequestsController extends Controller
             )->with('reject_message', 'L\'ouverture du compte a été rejété avec success !');
         }
 
+        $client->save();
+
         $choiceOfAccount = explode(",", $client->choix_type_compte);
 
         foreach($choiceOfAccount as &$choice){
@@ -70,18 +74,11 @@ class AccountRequestsController extends Controller
             $account->solde = 0;
             $account->type_compte = $choice;
 
-            $zerosForCusNum = "000000";
-
-            $randNum = strval(rand(0, 999999));
-
-            $lastCusNmmDigits =  substr($zerosForCusNum, 0, -strlen($randNum)) . $randNum;
-
-            $account->customer_num = "305" . $lastCusNmmDigits . "01";
-
             $account->client_id = $client->id;
 
             $account->save();
         }
+
 
         return redirect()->action(
             [AccountRequestsController::class, 'show'], ['trackId' => $client->track_id]
@@ -91,8 +88,25 @@ class AccountRequestsController extends Controller
     public function activate(string $trackId){
         $client = Client::where('track_id',$trackId)->first();
         $client->statut_ouverture_compte = 3;
+
+        $zerosForCusNum = "000000";
+
+        $randNum = strval(rand(0, 999999));
+
+        $lastCusNmmDigits =  substr($zerosForCusNum, 0, -strlen($randNum)) . $randNum;
+
+        $client->customer_num = "305" . $lastCusNmmDigits . "01";
+        
         $client->save();
         
+        $user = new User();
+
+        $user->name = $client->customer_num;
+        $user->password = Hash::make(preg_replace('/-/', '', $client->date_naissance));
+        $user->client_id = $client->id;
+
+        $user->save();
+
         return redirect()->action(
             [AccountRequestsController::class, 'show'], ['trackId' => $client->track_id]
         )->with('validate_message', 'Le compte été activé avec succès !');;

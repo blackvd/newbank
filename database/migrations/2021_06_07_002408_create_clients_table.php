@@ -38,6 +38,7 @@ class CreateClientsTable extends Migration
             $table->integer("statut_ouverture_compte");
             $table->boolean("accord_termes_conditions")->default(false);
             $table->integer("admin_code")->nullable(true);
+            $table->string("customer_num", 16)->nullable(true);
             $table->timestamps();
         });
     }
