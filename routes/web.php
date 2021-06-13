@@ -31,4 +31,6 @@ Route::prefix('admin')->group(function () {
     Route::post('/account_requests/activate/{trackId}', [App\Http\Controllers\Admin\AccountRequestsController::class, 'activate'])->name('admin.account_requests.activate_account');
 });
 
+Route::post('/first-login', [App\Http\Controllers\Auth\LoginController::class, 'userFirstLogin'])->name('first_login');
+
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

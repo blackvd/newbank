@@ -20,10 +20,24 @@
     <!-- END GLOBAL MANDATORY STYLES -->
     <link rel="stylesheet" type="text/css" href="assets/css/forms/theme-checkbox-radio.css">
     <link rel="stylesheet" type="text/css" href="assets/css/forms/switches.css">
+    <link href="plugins/animate/animate.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/components/custom-modal.css" rel="stylesheet" type="text/css" />
 
 </head>
 <body class="form">
+    @if (session('success_msg'))
+    <div class="alert alert-success border-0 mb-4" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg> ... </svg></button>
+        {{session('success_msg')}}
+    </div> 
+    @endif
 
+    @if (session('error_msg'))
+    <div class="alert alert-success border-0 mb-4" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg> ... </svg></button>
+        {{session('error_msg')}}
+    </div> 
+    @endif
     <div class="form-container outer">
         <div class="form-form">
             <div class="form-form-wrap">
@@ -63,7 +77,7 @@
                               </div>
 
                               <div class="social">
-                                <a href="javascript:void(0);" class="btn social-fb">
+                                <a type="button" class="btn social-fb" data-toggle="modal" data-target="#firstConModal">
                                     <span class="brand-name">Première connexion ?</span>
                                 </a>
                             </div>
@@ -79,6 +93,70 @@
         </div>
     </div>
 
+<!-- Modal -->
+<div class="modal fade" id="firstConModal" tabindex="-1" role="dialog" aria-labelledby="firstConModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="firstConModalLabel">Première connexion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="{{route('first_login')}}" method="post" id="firstConForm" class="simple-example" novalidate>
+                    @csrf
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="">Nom d'utilisateur</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                            <div class="invalid-feedback">
+                                Ceci est requis
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="">Mot de passe actuel</label>
+                            <input type="password" class="form-control" id="password_current" name="password_current" required>
+                            <div class="invalid-feedback">
+                                Ceci est requis
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="">Mot de passe (nouveau)</label>
+                            <input type="password" class="form-control" id="password_new" name="password_new" required>
+                            <div class="invalid-feedback">
+                                Ceci est requis
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="">Confirmation du mot de passe</label>
+                            <input type="password" class="form-control" id="password_new_confirmation" name="password_new_confirmation" required>
+                            <div class="invalid-feedback">
+                                Ceci est requis
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text-center d-none">
+                        <button type="submit" id="submitBtn">ok</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annuler</button>
+                <button type="button" class="btn btn-primary" id="triggerSubmitBtn">Valider</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
     
     <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
     <script src="assets/js/libs/jquery-3.1.1.min.js"></script>
@@ -87,5 +165,13 @@
     
     <!-- END GLOBAL MANDATORY SCRIPTS -->
     <script src="assets/js/authentication/form-2.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"></script>
+    <script src="assets/js/forms/bootstrap_validation/bs_validation_script.js"></script>
+
+    <script>
+        $('#triggerSubmitBtn').click(function() {
+            $("#submitBtn").trigger('click')
+        })
+    </script>
 </body>
 </html>
