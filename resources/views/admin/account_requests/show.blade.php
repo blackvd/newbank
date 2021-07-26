@@ -148,7 +148,7 @@
                                         <span class="text-primary">Compte courant</span>
                                         @endif
                                     </td>
-                                    <td>{{$compte->customer_num}}</td>
+                                    <td>{{$compte->client->customer_num}}</td>
                                 </tr>
                             @endforeach
                         </tbody>

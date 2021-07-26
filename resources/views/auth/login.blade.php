@@ -27,14 +27,18 @@
 <body class="form">
     @if (session('success_msg'))
     <div class="alert alert-success border-0 mb-4" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg> ... </svg></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
         {{session('success_msg')}}
     </div> 
     @endif
 
     @if (session('error_msg'))
     <div class="alert alert-success border-0 mb-4" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><svg> ... </svg></button>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
         {{session('error_msg')}}
     </div> 
     @endif
@@ -52,9 +56,9 @@
                             <div class="form">
 
                                 <div id="username-field" class="field-wrapper input">
-                                    <label for="username">NOM D'UTILISATEUR</label>
+                                    <label for="name">NOM D'UTILISATEUR</label>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-                                    <input id="username" name="username" type="text" class="form-control" placeholder="Nom d'utilisateur">
+                                    <input id="name" name="name" type="text" class="form-control" placeholder="Nom d'utilisateur">
                                 </div>
 
                                 <div id="password-field" class="field-wrapper input mb-2">
@@ -108,8 +112,8 @@
                     @csrf
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label for="">Nom d'utilisateur</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
+                            <label for="first_con_name">Nom d'utilisateur</label>
+                            <input type="text" class="form-control" id="first_con_name" name="first_con_name" required>
                             <div class="invalid-feedback">
                                 Ceci est requis
                             </div>

@@ -7,6 +7,8 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -43,20 +45,20 @@ class LoginController extends Controller
 
     public function userFirstLogin(){
         $this->validate(request(),[
-            'name' => 'required',
+            'first_con_name' => 'required',
             'password_current' => 'required',
             'password_new' => 'required|confirmed|min:8',
         ]);
 
-        $user = User::where('name', request()->name)->first();
+        $user = User::where([['name', request()->first_con_name], ['password', request()->password_current]])->first();
         
         if($user){
             if($user->enabled != 1){
-                $user->password = request()->password_new;
-            $user->enabled = 1;
-            $user->save();
+                $user->password = Hash::make(request()->password_new);
+                $user->enabled = 1;
+                $user->save();
 
-            return redirect()->route('login')->with('success_msg', 'Votre compte a bien été activé, vous pouvez à présent vous connecter !');
+                return redirect()->route('login')->with('success_msg', 'Votre compte a bien été activé, vous pouvez à présent vous connecter !');
             }
             return redirect()->route('login')->with('error_msg', 'Votre compte a déjà été activé !');
         }
@@ -78,5 +80,9 @@ class LoginController extends Controller
             return redirect()->intended('/admin/dashboard');
 
         return back()->withInput(request()->only('username'))->with('error_msg', 'Nom d\'utilisateur ou mot de passe incorrect');
+    }
+
+    public function username(){
+        return 'name';
     }
 }

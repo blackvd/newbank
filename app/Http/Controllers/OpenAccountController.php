@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Identification;
 use Carbon\Carbon;
+use App\Events\ClientRegistered;
 
 class OpenAccountController extends Controller
 {
@@ -91,6 +92,8 @@ class OpenAccountController extends Controller
         $identification->certificat_residence = $certificatResidenceFileName;
         $identification->signature = $signatureFileName;
         $identification->save();
+
+        ClientRegistered::dispatch($lastestClient);
 
         return redirect('/open-account/success');
     }

@@ -34,3 +34,4 @@ Route::prefix('admin')->group(function () {
 Route::post('/first-login', [App\Http\Controllers\Auth\LoginController::class, 'userFirstLogin'])->name('first_login');
 
 Route::get('/', [App\Http\Controllers\User\DashboardController::class, 'index'])->name('home');
+Route::get('/account', [App\Http\Controllers\User\AccountController::class, 'index'])->name('account');

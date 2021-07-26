@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\User;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
-class DashboardController extends Controller
+class OrderCardController extends Controller
 {
+
     /**
      * Create a new controller instance.
      *
@@ -18,6 +18,6 @@ class DashboardController extends Controller
     }
 
     public function index(){
-        return view('user.dashboard');
+        return view('user.order_cards.index');
     }
 }
