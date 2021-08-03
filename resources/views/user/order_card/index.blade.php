@@ -1,0 +1,49 @@
+@extends('layouts.user.app')
+
+@section('title', 'Commande carte')
+
+@section('styles')
+    <link href="{{asset('assets/css/tables/table-basic.css')}}" rel="stylesheet" type="text/css" />
+@endsection
+
+@section('css-apply-to-body', 'alt-menu sidebar-noneoverflow')
+
+@section('content')
+    <div class="page-header page-header-scrollspy">
+        <nav class="breadcrumb-one" aria-label="breadcrumb">
+            <div class="title">
+                <h3>Compte(s)</h3>
+            </div>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item active"  aria-current="page"><a href="javascript:void(0);">Liste</a></li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="row layout-top-spacing">
+        <div id="tableSimple" class="col-lg-12 col-12 layout-spacing">
+            <div class="statbox widget box box-shadow">
+                <div class="widget-content widget-content-area">
+                    <button class="btn btn-secondary mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                        Commander une carte
+                    </button>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover mb-4">
+                            <thead>
+                            <th>Numero commande</th>
+                            <th>Date commande</th>
+                            <th>Quantité</th>
+                            <th>Compte associé</th>
+                            <th>Action</th>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+
+@section('scripts')
+@endsection

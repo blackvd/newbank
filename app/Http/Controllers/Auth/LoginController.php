@@ -43,6 +43,32 @@ class LoginController extends Controller
         $this->middleware('guest:admin')->except('logout');
     }
 
+    public function login(Request $request)
+    {
+        $this->validateLogin($request);
+
+        // the login attempts for this application. We'll key this by the username and
+        // the IP address of the client making these requests into this application.
+        if (method_exists($this, 'hasTooManyLoginAttempts') &&
+            $this->hasTooManyLoginAttempts($request)) {
+            $this->fireLockoutEvent($request);
+
+            return $this->sendLockoutResponse($request);
+        }
+
+        $user = User::where([['name', $request->name], ['enabled', 1]])->first();
+        if($user && $this->attemptLogin($request)){
+            return $this->sendLoginResponse($request);
+        }
+
+        // If the login attempt was unsuccessful we will increment the number of attempts
+        // to login and redirect the user back to the login form. Of course, when this
+        // user surpasses their maximum number of attempts they will get locked out.
+        $this->incrementLoginAttempts($request);
+
+        return $this->sendFailedLoginResponse($request);
+    }
+
     public function userFirstLogin(){
         $this->validate(request(),[
             'first_con_name' => 'required',
@@ -50,9 +76,9 @@ class LoginController extends Controller
             'password_new' => 'required|confirmed|min:8',
         ]);
 
-        $user = User::where([['name', request()->first_con_name], ['password', request()->password_current]])->first();
-        
-        if($user){
+        $credentials = ["name" => request("first_con_name"), "password" => request("password_current")];
+        if(Auth::once($credentials)){
+            $user = User::where('name', request()->first_con_name)->first();
             if($user->enabled != 1){
                 $user->password = Hash::make(request()->password_new);
                 $user->enabled = 1;
