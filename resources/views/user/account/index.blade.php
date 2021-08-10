@@ -1,7 +1,7 @@
 @extends('layouts.user.app')
 
 @section('title', 'Mes comptes')
-    
+
 @section('styles')
 <link href="{{asset('assets/css/components/tabs-accordian/custom-tabs.css')}}" rel="stylesheet" type="text/css" />
 @endsection
@@ -30,7 +30,7 @@
                     </div>
                 </div>
             </div>
-    
+
             <div class="widget-content widget-content-area simple-tab">
                 <ul class="nav nav-tabs  mb-3 mt-3" id="simpletab" role="tablist">
                     <li class="nav-item">
@@ -63,12 +63,23 @@
                                         <thead>
                                             <tr>
                                                 <th>Numéro de compte</th>
+                                                <th>Type de compte</th>
                                                 <th>Solde</th>
                                                 <th class="text-center">Statut</th>
                                                 <th></th>
                                             </tr>
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody>
+                                        @foreach($account_s as $account)
+                                            <tr>
+                                                <td>{{$account->numero_compte}}</td>
+                                                <td>{{$account->type_compte == 1 ? "Courant" : "Épargne"}}</td>
+                                                <td>{{$account->solde}}</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
