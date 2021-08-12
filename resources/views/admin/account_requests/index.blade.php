@@ -50,7 +50,23 @@
                             <td>{{$request->date_naissance}}</td>
                             <td>{{$request->lieu_naissance}}</td>
                             <td>{{$request->nationalite}}</td>
-                            <td>{{$request->statut_ouverture_compte}}</td>
+                            <td>
+                                @if ($request->statut_ouverture_compte == 1)
+                                EN ATTENTE
+                                @endif
+                                @if ($request->statut_ouverture_compte == 2)
+                                VALIDATION
+                                @endif
+                                @if ($request->statut_ouverture_compte == 3)
+                                OUVERT
+                                @endif
+                                @if ($request->statut_ouverture_compte == 0)
+                                DESACTIVÉ
+                                @endif
+                                @if ($request->statut_ouverture_compte == -1)
+                                REJÉTÉ
+                                @endif
+                            </td>
                             <td class="text-center">
                                 <div class="dropdown">
                                     <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
