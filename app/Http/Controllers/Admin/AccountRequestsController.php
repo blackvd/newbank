@@ -117,11 +117,15 @@ class AccountRequestsController extends Controller
         $client = Client::where('track_id',$trackId)->first();
         $client->statut_ouverture_compte = Client::STATUT['BLOQUER'];
         $client->save();
-
+        $user = User::where("client_id",$client->id)->first();
+        if (!is_null($user)) {
+            $user->enabled = 0;
+            $user->password = \Hash::make("default newbank client");
+            
+            $user->save();
+        }
         return redirect()->back()->with(
             'reject_message', 'Le compte a été bloqué avec success !'
-        );
-        
-        // dd($client->statut_ouverture_compte);
+        );        
     }
 }

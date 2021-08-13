@@ -64,7 +64,7 @@
                     </div>
                 </div>
                 <div class="text-center user-info">
-                    <img src="{{asset('storage/clients/pieces/'.$account->track_id.'/'.$account->identification->photo)}}" style="height: 150px; width: 150px;" alt="avatar">
+                    <img src="{{asset('storage/clients/pieces/'.$account->track_id.'/'.$account->identification->photo )}}" style="height: 150px; width: 150px;" alt="avatar">
                     <p class="">{{$account->nom}} {{$account->prenoms}}</p>
                 </div>
 

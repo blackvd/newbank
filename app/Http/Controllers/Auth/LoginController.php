@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -59,6 +59,10 @@ class LoginController extends Controller
         $user = User::where([['name', $request->name], ['enabled', 1]])->first();
         if($user && $this->attemptLogin($request)){
             return $this->sendLoginResponse($request);
+        }else{
+            
+            return redirect(route('login'))->with('error_msg', 'Veillez contacter votre gestionnaire si 
+            vous ne parvenez pas a vous connecter');
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
