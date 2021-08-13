@@ -111,4 +111,17 @@ class AccountRequestsController extends Controller
             [AccountRequestsController::class, 'show'], ['trackId' => $client->track_id]
         )->with('validate_message', 'Le compte été activé avec succès !');;
     }
+
+    public function block(String $trackId)
+    {
+        $client = Client::where('track_id',$trackId)->first();
+        $client->statut_ouverture_compte = Client::STATUT['BLOQUER'];
+        $client->save();
+
+        return redirect()->back()->with(
+            'reject_message', 'Le compte a été bloqué avec success !'
+        );
+        
+        // dd($client->statut_ouverture_compte);
+    }
 }

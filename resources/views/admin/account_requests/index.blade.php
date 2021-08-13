@@ -66,6 +66,9 @@
                                 @if ($request->statut_ouverture_compte == -1)
                                 REJÉTÉ
                                 @endif
+                                @if ($request->statut_ouverture_compte == -2)
+                                BLOQUER
+                                @endif
                             </td>
                             <td class="text-center">
                                 <div class="dropdown">
@@ -75,7 +78,8 @@
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
                                         <a class="dropdown-item" href="{{route('admin.account_requests.show', $request->track_id)}}">Détails</a>
-                                        <a class="dropdown-item" href="javascript:void(0);">Bloquer</a>
+                                        <a class="dropdown-item" href="{{route('admin.account_requests.block_account', $request->track_id)}}">Bloquer</a>
+                                        {{-- <a class="dropdown-item" href="javascript:void(0);">Bloquer</a> --}}
                                     </div>
                                 </div>
                             </td>
