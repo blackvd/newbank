@@ -8,6 +8,7 @@ use App\Models\Compte;
 use App\Events\CompteOpened;
 use Illuminate\Http\Request;
 use App\Events\CompteBlocked;
+use App\Events\CompteRejected;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
@@ -52,6 +53,9 @@ class AccountRequestsController extends Controller
         $client->save();
 
         if($client->statut_ouverture_compte != Client::STATUT['VALIDATION']){
+            
+            CompteRejected::dispatch($client);
+
             return redirect()->action(
                 [AccountRequestsController::class, 'show'], ['trackId' => $client->track_id]
             )->with('reject_message', 'L\'ouverture du compte a été rejété avec success !');

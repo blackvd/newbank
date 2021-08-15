@@ -2,13 +2,13 @@
 
 namespace App\Listeners;
 
-use App\Events\CompteOpened;
-use App\Mail\RequestValidateMail;
+use App\Events\CompteRejected;
+use App\Mail\RequestRejectMail;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class CompteOpenedListener
+class CompteRejectedListener
 {
     /**
      * Create the event listener.
@@ -23,11 +23,11 @@ class CompteOpenedListener
     /**
      * Handle the event.
      *
-     * @param  CompteOpened  $event
+     * @param  CompteRejected  $event
      * @return void
      */
-    public function handle(CompteOpened $event)
+    public function handle(CompteRejected $event)
     {
-        Mail::to($event->client->email)->send(new RequestValidateMail($event->client->user,$event->client->comptes[0]));
+        Mail::to($event->client->email)->send(new RequestRejectMail($event->client->comptes[0]));
     }
 }
