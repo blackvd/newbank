@@ -7,6 +7,7 @@
 
     <link href="{{asset('assets/css/tables/table-basic.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('assets/css/components/custom-modal.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{asset('plugins/bootstrap-select/bootstrap-select.min.css')}}">
 @endsection
 
 @section('css-apply-to-body', 'alt-menu sidebar-noneoverflow')
@@ -58,12 +59,24 @@
                 </div>
                 <div class="modal-body">
                     <form action="">
-
+                        <div class="form-group mb-4">
+                            <label for="account_type">Compte(s)</label>
+                            <select class="selectpicker form-control" id="account_type" multiple aria-describedby="chooseAccountHelp">
+                                @foreach($client_account as $account)
+                                    <option value="{{$account->type_compte}}">{{$account->type_compte == 1 ? 'Compte courant' : 'Compte épargne'}}</option>
+                                @endforeach
+                            </select>
+                            <small id="chooseAccountHelp" class="form-text text-muted">Choisissez le(s) compte(s) à lier à(aux) cartes</small>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="inputAddress">Adresse de livraison</label>
+                            <input type="text" class="form-control" id="address" placeholder="Yopougon toit rouge">
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Discard</button>
-                    <button type="button" class="btn btn-primary">Save</button>
+                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annuler</button>
+                    <button type="button" class="btn btn-primary">Commander</button>
                 </div>
             </div>
         </div>
@@ -71,4 +84,5 @@
 @endsection
 
 @section('scripts')
+    <script src="{{asset('plugins/bootstrap-select/bootstrap-select.min.js')}}"></script>
 @endsection

@@ -18,6 +18,6 @@ class CardRequestController extends Controller
     }
 
     public function index(){
-        //
+        dd("je suis test de commande de carte");
     }
 }

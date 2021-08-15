@@ -64,12 +64,12 @@ class AccountRequestsController extends Controller
 
             $zerosForAccount = "000000000000";
 
-            
+
             $accountsCount = strval(Compte::all()->count());
 
             $lastDigits =  substr($zerosForAccount, 0, -strlen($accountsCount)) . $accountsCount;
 
-            $account->numero_compte = "CI99101305" . $lastDigits . "85";
+            $account->numero_compte = "CI22101305" . $lastDigits . "85";
             $account->rib = substr($account->numero_compte, 2);
             $account->solde = 0;
             $account->type_compte = $choice;
@@ -96,9 +96,9 @@ class AccountRequestsController extends Controller
         $lastCusNmmDigits =  substr($zerosForCusNum, 0, -strlen($randNum)) . $randNum;
 
         $client->customer_num = "305" . $lastCusNmmDigits . "01";
-        
+
         $client->save();
-        
+
         $user = new User();
 
         $user->name = $client->customer_num;
