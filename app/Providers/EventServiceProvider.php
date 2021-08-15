@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Events\CompteOpened;
 use App\Events\CompteBlocked;
 use App\Events\ClientRegistered;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+use App\Listeners\CompteOpenedListener;
 use App\Listeners\SendEmailNotification;
 use App\Listeners\SendBlockedNotification;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -27,6 +29,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         CompteBlocked::class =>[
             SendBlockedNotification::class,
+        ],
+        CompteOpened::class =>[
+            CompteOpenedListener::class,
         ],
     ];
 

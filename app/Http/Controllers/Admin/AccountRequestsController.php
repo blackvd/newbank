@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Models\User;
 use App\Models\Client;
 use App\Models\Compte;
+use App\Events\CompteOpened;
 use Illuminate\Http\Request;
 use App\Events\CompteBlocked;
 use App\Http\Controllers\Controller;
@@ -108,6 +109,9 @@ class AccountRequestsController extends Controller
 
         $user->save();
 
+        CompteOpened::dispatch($client);
+        // dd();
+
         return redirect()->action(
             [AccountRequestsController::class, 'show'], ['trackId' => $client->track_id]
         )->with('validate_message', 'Le compte été activé avec succès !');;
@@ -126,7 +130,7 @@ class AccountRequestsController extends Controller
             $user->save();
         }        
 
-        $verif = CompteBlocked::dispatch($client);
+        CompteBlocked::dispatch($client);
 
         return redirect()->back()->with(
             'reject_message', 'Le compte a été bloqué avec success !'

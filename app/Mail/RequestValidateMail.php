@@ -2,11 +2,12 @@
 
 namespace App\Mail;
 
+use App\Models\User;
+use App\Models\Compte;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Compte;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
 class RequestValidateMail extends Mailable
 {
@@ -15,17 +16,21 @@ class RequestValidateMail extends Mailable
     /**
      * The account instance
      * 
-     * @var \App\Models\Compte
+     * @var \App\Models\User
      */
+    public $user;
+
     public $compte;
+
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(Compte $compte)
+    public function __construct(User $user,Compte $compte)
     {
+        $this->user = $user;
         $this->compte = $compte;
     }
 
@@ -36,6 +41,6 @@ class RequestValidateMail extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('emails.request_validate');
     }
 }
