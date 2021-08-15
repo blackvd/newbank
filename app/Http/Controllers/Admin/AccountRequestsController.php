@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Client;
 use App\Models\Compte;
-use App\Models\User;
+use Illuminate\Http\Request;
+use App\Events\CompteBlocked;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class AccountRequestsController extends Controller
@@ -123,9 +124,13 @@ class AccountRequestsController extends Controller
             $user->password = \Hash::make("default newbank client");
             
             $user->save();
-        }
+        }        
+
+        $verif = CompteBlocked::dispatch($client);
+
         return redirect()->back()->with(
             'reject_message', 'Le compte a été bloqué avec success !'
-        );        
+        );
+                
     }
 }
