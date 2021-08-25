@@ -72,7 +72,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($account_s as $account)
+                                        @foreach($user->comptes as $account)
                                             <tr>
                                                 <td>{{$account->numero_compte}}</td>
                                                 <td>{{$account->type_compte == 1 ? "Courant" : "Épargne"}}</td>

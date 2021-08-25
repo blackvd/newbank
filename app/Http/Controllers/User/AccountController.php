@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use App\Models\Client;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
@@ -19,8 +20,9 @@ class AccountController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(){
-        $account_s = Auth::user()->client->comptes;
-        return view('user.account.index', ["account_s" => $account_s]);
+    public function index()
+    {
+        $user = Client::find(Auth::user()->client_id)->first();
+        return view('user.account.index', ['user'=> $user]);
     }
 }

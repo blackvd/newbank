@@ -96,22 +96,7 @@ class LoginController extends Controller
         return redirect()->route('login')->with('error_msg', 'Vos accès sont incorrect veuillez réessayer');
     }
 
-    public function showAdminLogin(){
-        return view('admin.auth.login');
-    }
-
-    public function adminLogin(){
-        $this->validate(request(),[
-            'username' => 'required',
-            'password' => 'required|min:6'
-        ]);
-
-        if(Auth::guard('admin')->attempt(['username' => request()->username, 'password' => request()->password]))
-            return redirect()->intended('/admin/dashboard');
-
-        return back()->withInput(request()->only('username'))->with('error_msg', 'Nom d\'utilisateur ou mot de passe incorrect');
-    }
-
+   
     public function username(){
         return 'name';
     }
