@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Client;
 use App\Models\Compte;
-use App\Models\User;
+use Illuminate\Http\Request;
+use App\Events\CompteBlocked;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class AccountRequestsController extends Controller
@@ -110,5 +111,26 @@ class AccountRequestsController extends Controller
         return redirect()->action(
             [AccountRequestsController::class, 'show'], ['trackId' => $client->track_id]
         )->with('validate_message', 'Le compte été activé avec succès !');;
+    }
+
+    public function block(String $trackId)
+    {
+        $client = Client::where('track_id',$trackId)->first();
+        $client->statut_ouverture_compte = Client::STATUT['BLOQUER'];
+        $client->save();
+        $user = User::where("client_id",$client->id)->first();
+        if (!is_null($user)) {
+            $user->enabled = 0;
+            $user->password = \Hash::make("default newbank client");
+            
+            $user->save();
+        }        
+
+        $verif = CompteBlocked::dispatch($client);
+
+        return redirect()->back()->with(
+            'reject_message', 'Le compte a été bloqué avec success !'
+        );
+                
     }
 }

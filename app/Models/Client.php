@@ -14,7 +14,8 @@ class Client extends Model
         "VALIDATION" => 2,
         "OUVERT" => 3,
         "DESACTIVÉ" => 0,
-        "REJÉTÉ" => -1
+        "REJÉTÉ" => -1,
+        "BLOQUER" => -2
     ];
 
     public function user(){
