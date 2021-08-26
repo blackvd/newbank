@@ -62,7 +62,7 @@
                         <div class="form-group mb-4">
                             <label for="account_type">Compte(s)</label>
                             <select class="selectpicker form-control" id="account_type" multiple aria-describedby="chooseAccountHelp">
-                                @foreach($client_account as $account)
+                                @foreach($user->comptes as $account)
                                     <option value="{{$account->type_compte}}">{{$account->type_compte == 1 ? 'Compte courant' : 'Compte épargne'}}</option>
                                 @endforeach
                             </select>

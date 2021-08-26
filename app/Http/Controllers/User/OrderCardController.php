@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\User;
 
-use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\Compte;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class OrderCardController extends Controller
@@ -21,7 +22,8 @@ class OrderCardController extends Controller
     }
 
     public function index(){
-        $client_account = Compte::where("client_id", Auth::user()->client->id)->get();
-        return view('user.order_card.index', ["client_account" => $client_account]);
+       
+        $user = Client::find(Auth::user()->client_id)->first();
+        return view('user.order_card.index', ["user" => $user]);
     }
 }

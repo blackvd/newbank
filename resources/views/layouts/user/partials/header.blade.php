@@ -74,7 +74,7 @@
             <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1">
                 <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="user-profile-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media">
-                        <img src='{{ asset("userImage/$user->track_id/PHOTO.jpg") }}' class="img-fluid" style="height: 40px;width: 40px;" alt="user">
+                        <img src="{{ asset('userImage/'.$user->track_id.'/PHOTO.jpg') }}" class="img-fluid" style="height: 40px;width: 40px;" alt="user">
                     </div>
                 </a>
                 <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
