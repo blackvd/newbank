@@ -9,6 +9,8 @@ class AdresseLivraison extends Model
 {
     use HasFactory;
 
+    protected $fillable = ["longitude","latitude","description","commande_id"];
+
     public function commande(){
         return $this->belongsTo(Commande::class);
     }
