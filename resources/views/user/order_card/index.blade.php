@@ -41,6 +41,19 @@
                             <th>Compte associé</th>
                             <th>Action</th>
                             </thead>
+                            {{--  {{ dd($user->commandes) }}  --}}
+                            @if ( count($user->commandes)>=1 )
+                                <tbody>
+                                    @foreach ($user->commandes as $commande)
+                                    <tr>
+                                        <td>{{ $commande->no_commande }}</td>
+                                        <td>{{ $commande->created_at }}</td>
+                                        <td>{{ count($user->commandes) }}</td>
+                                        <td>{{ $commande->type_de_compte }}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            @endif
                         </table>
                     </div>
                 </div>
@@ -58,10 +71,11 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="">
+                    <form action="{{ route('submit_order') }}" method="POST">
+                        @csrf
                         <div class="form-group mb-4">
                             <label for="account_type">Compte(s)</label>
-                            <select class="selectpicker form-control" id="account_type" multiple aria-describedby="chooseAccountHelp">
+                            <select class="selectpicker form-control" id="account_type" name="account_type" multiple aria-describedby="chooseAccountHelp">
                                 @foreach($user->comptes as $account)
                                     <option value="{{$account->type_compte}}">{{$account->type_compte == 1 ? 'Compte courant' : 'Compte épargne'}}</option>
                                 @endforeach
@@ -70,14 +84,15 @@
                         </div>
                         <div class="form-group mb-4">
                             <label for="inputAddress">Adresse de livraison</label>
-                            <input type="text" class="form-control" id="address" placeholder="Yopougon toit rouge">
+                            <input type="text" class="form-control" id="address" name="adresse_for_delivred" placeholder="Yopougon toit rouge">
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annuler</button>
+                            <button type="submit" name="valide" class="btn btn-primary">Commander</button>
                         </div>
                     </form>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annuler</button>
-                    <button type="button" class="btn btn-primary">Commander</button>
-                </div>
+                
             </div>
         </div>
     </div>

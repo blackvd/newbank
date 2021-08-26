@@ -1,8 +1,9 @@
 <?php
 
+use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\OpenAccountController;
-
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\OrderCardController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -26,6 +27,18 @@ Route::get('/open-account/success', [OpenAccountController::class, 'openAccountS
 
 Auth::routes();
 
+Route::post('/first-login', [App\Http\Controllers\Auth\LoginController::class, 'userFirstLogin'])->name('first_login');
+
+//Route::get('/', [App\Http\Controllers\User\DashboardController::class, 'index'])->name('home');
+Route::get('/', [AccountController::class, 'index'])->name('account');
+
+Route::get('/order-card', [OrderCardController::class, 'index'])->name('order-card');
+Route::post('/order-card', [OrderCardController::class,'orderCard'])->name('submit_order');
+
+
+
+
+
 Route::group(['prefix'=>"admin"],function () {
     Route::get('/login', [AdminLoginController::class,'showAdminLogin'])->name('admin.login');
     Route::post('/login', [AdminLoginController::class,'adminLogin'])->name('admin.postLogin');
@@ -42,9 +55,4 @@ Route::group(['prefix'=>"admin"],function () {
     Route::get('/account_managments', [AccountManagmentController::class, 'index'])->name('admin.account_managements');
 });
 
-Route::post('/first-login', [App\Http\Controllers\Auth\LoginController::class, 'userFirstLogin'])->name('first_login');
 
-//Route::get('/', [App\Http\Controllers\User\DashboardController::class, 'index'])->name('home');
-Route::get('/', [AccountController::class, 'index'])->name('account');
-
-Route::get('/order-card', [OrderCardController::class, 'index'])->name('order-card');

@@ -16,6 +16,8 @@ class Carte extends Model
         "MASTERCARD & GIM-UEMOA" => 4,
     ];
 
+    protected $fillable = ['type_carte','compte_id',"no_carte"];
+
     public function compte(){
         return $this->belongsTo(Compte::class);
     }
