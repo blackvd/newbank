@@ -5,7 +5,7 @@
         <a href="javascript:void(0);" class="sidebarCollapse" data-placement="bottom"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></a>
 
         <div class="nav-logo align-self-center">
-            <a class="navbar-brand" href="index.html"><img alt="logo" src="{{asset('assets/img/logo2.svg')}}"> <span class="navbar-brand-name">NewBank</span></a>
+            <a class="navbar-brand" href="{{ route("account") }}"><img alt="logo" src="{{asset('assets/img/logo2.svg')}}"> <span class="navbar-brand-name">NewBank</span></a>
         </div>
 
         <ul class="navbar-item topbar-navigation">
@@ -15,12 +15,12 @@
                 <nav id="topbar">
                     <ul class="navbar-nav theme-brand flex-row  text-center">
                         <li class="nav-item theme-logo">
-                            <a href="index.html">
+                            <a href="{{ route("account") }}">
                                 <img src="{{asset('assets/img/logo2.svg')}}" class="navbar-logo" alt="logo">
                             </a>
                         </li>
                         <li class="nav-item theme-text">
-                            <a href="index.html" class="nav-link"> NewBank </a>
+                            <a href="{{ route("account") }}" class="nav-link"> NewBank </a>
                         </li>
                     </ul>
 
@@ -74,14 +74,14 @@
             <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1">
                 <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="user-profile-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media">
-                        <img src="{{asset('storage/clients/pieces/'.\Illuminate\Support\Facades\Auth::user()->client->track_id.'/'.\Illuminate\Support\Facades\Auth::user()->client->identification->photo)}}" class="img-fluid" style="height: 40px;width: 40px;" alt="admin-profile">
+                        <img src="{{ asset('userImage/'.$user->track_id.'/PHOTO.jpg') }}" class="img-fluid" style="height: 40px;width: 40px;" alt="user">
                     </div>
                 </a>
                 <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                     <div class="user-profile-section">
                         <div class="media mx-auto">
                             <div class="media-body">
-                                <h5>{{\Illuminate\Support\Facades\Auth::user()->client->nom}} {{\Illuminate\Support\Facades\Auth::user()->client->prenoms}}</h5>
+                                <h5>{{$user->nom}} {{$user->prenoms}}</h5>
                             </div>
                         </div>
                     </div>

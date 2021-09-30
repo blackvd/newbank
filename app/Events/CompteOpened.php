@@ -11,12 +11,11 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ClientRegistered
+class CompteOpened
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $client;
-
     /**
      * Create a new event instance.
      *

@@ -11,9 +11,10 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ClientRegistered
+class CompteRejected
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+
 
     public $client;
 

@@ -15,6 +15,8 @@ class Commande extends Model
         "DELIVRÉ" => 3
     ];
 
+    protected $fillable= ["no_commande","client_id",'statut',"type_de_compte"];
+
     public function client(){
         return $this->belongsTo(Client::class);
     }

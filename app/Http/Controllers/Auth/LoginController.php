@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
-use App\Models\User;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -59,6 +59,10 @@ class LoginController extends Controller
         $user = User::where([['name', $request->name], ['enabled', 1]])->first();
         if($user && $this->attemptLogin($request)){
             return $this->sendLoginResponse($request);
+        }else{
+            
+            return redirect(route('login'))->with('error_msg', 'Veillez contacter votre gestionnaire si 
+            vous ne parvenez pas a vous connecter');
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -92,22 +96,7 @@ class LoginController extends Controller
         return redirect()->route('login')->with('error_msg', 'Vos accès sont incorrect veuillez réessayer');
     }
 
-    public function showAdminLogin(){
-        return view('admin.auth.login');
-    }
-
-    public function adminLogin(){
-        $this->validate(request(),[
-            'username' => 'required',
-            'password' => 'required|min:6'
-        ]);
-
-        if(Auth::guard('admin')->attempt(['username' => request()->username, 'password' => request()->password]))
-            return redirect()->intended('/admin/dashboard');
-
-        return back()->withInput(request()->only('username'))->with('error_msg', 'Nom d\'utilisateur ou mot de passe incorrect');
-    }
-
+   
     public function username(){
         return 'name';
     }

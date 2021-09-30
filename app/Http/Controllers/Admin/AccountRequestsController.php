@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Client;
 use App\Models\Compte;
-use App\Models\User;
+use App\Events\CompteOpened;
+use Illuminate\Http\Request;
+use App\Events\CompteBlocked;
+use App\Events\CompteRejected;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 
 class AccountRequestsController extends Controller
@@ -18,7 +21,7 @@ class AccountRequestsController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('adminAuth');
     }
 
     /**
@@ -50,6 +53,9 @@ class AccountRequestsController extends Controller
         $client->save();
 
         if($client->statut_ouverture_compte != Client::STATUT['VALIDATION']){
+            
+            CompteRejected::dispatch($client);
+
             return redirect()->action(
                 [AccountRequestsController::class, 'show'], ['trackId' => $client->track_id]
             )->with('reject_message', 'L\'ouverture du compte a été rejété avec success !');
@@ -107,8 +113,32 @@ class AccountRequestsController extends Controller
 
         $user->save();
 
+        CompteOpened::dispatch($client);
+        // dd();
+
         return redirect()->action(
             [AccountRequestsController::class, 'show'], ['trackId' => $client->track_id]
         )->with('validate_message', 'Le compte été activé avec succès !');;
+    }
+
+    public function block(String $trackId)
+    {
+        $client = Client::where('track_id',$trackId)->first();
+        $client->statut_ouverture_compte = Client::STATUT['BLOQUER'];
+        $client->save();
+        $user = User::where("client_id",$client->id)->first();
+        if (!is_null($user)) {
+            $user->enabled = 0;
+            $user->password = \Hash::make("default newbank client");
+            
+            $user->save();
+        }        
+
+        CompteBlocked::dispatch($client);
+
+        return redirect()->back()->with(
+            'reject_message', 'Le compte a été bloqué avec success !'
+        );
+                
     }
 }

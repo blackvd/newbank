@@ -2,21 +2,17 @@
 
 namespace App\Mail;
 
+use App\Models\Client;
 use App\Models\Compte;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class RequestRejectMail extends Mailable
+class AccountBlockMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * The account instance
-     * 
-     * @var \App\Models\Compte
-     */
     public $compte;
 
     /**
@@ -36,6 +32,6 @@ class RequestRejectMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.request_reject');
+        return $this->view('emails.compte_block');
     }
 }
