@@ -183,11 +183,6 @@
                                     <label for="objetCompte">Objet du compte</label>
                                     <input type="text" id="objetCompte" name="objet_compte" class="form-control required" placeholder="Objet du compte">
                                 </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="initialAmount">Montant Initial</label>
-                                    <input type="number" id="initialAmount" name="initial_amount" class="form-control required" placeholder="100000">
-                                </div>
                             </div>
                         </section>
                         <h3>Pièces</h3>
