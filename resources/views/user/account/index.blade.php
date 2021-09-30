@@ -8,6 +8,7 @@
 <link rel="stylesheet" type="text/css" href="{{asset('assets/css/elements/alert.css')}}">
 <link href="{{asset('plugins/flatpickr/flatpickr.css')}}" rel="stylesheet" type="text/css">
 <link href="{{asset('plugins/flatpickr/custom-flatpickr.css')}}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{{asset('plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css')}}">
 @endsection
 
 @section('css-apply-to-body', 'alt-menu sidebar-noneoverflow')
@@ -52,6 +53,7 @@
                         <div class="dropdown-menu">
                             <a class="dropdown-item" id="rib-tab" data-toggle="tab" href="#rib" role="tab" aria-controls="rib" aria-selected="false">RIB</a>
                             <a class="dropdown-item"  id="bilan-tab" data-toggle="tab" href="#bilan" role="tab" aria-controls="bilan" aria-selected="false">Relevé de compte</a>
+                            <a class="dropdown-item"  id="loan-tab" data-toggle="tab" href="#loan" role="tab" aria-controls="loan" aria-selected="false">Prêt</a>
                         </div>
                     </li>
                     {{-- <li class="nav-item">
@@ -164,9 +166,9 @@
                             <div class="tab-pane fade" id="rib" role="tabpanel" aria-labelledby="rib-tab">
                                 <form action="">
                                     <div class="form-group row mb-4">
-                                        <label for="hEmail" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Options</label>
+                                        <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Options</label>
                                         <div class="col-xl-10 col-lg-9 col-sm-10">
-                                            <select class="selectpicker form-control">
+                                            <select id="options" name="options" class="selectpicker form-control">
                                                 <option>Télécharger</option>
                                                 <option>Recevoir par mail</option>
                                                 <option>Télécharger & recevoir par mail</option>
@@ -184,6 +186,40 @@
                                     <button type="submit" class="btn btn-primary">Valider</button>
                                 </form>
                             </div>
+                            <div class="tab-pane fade" id="loan" role="tabpanel" aria-labelledby="loan-tab">
+                                <form action="" class="">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="form-group row mb-4">
+                                                <label for="amount" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant du prêt</label>
+                                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                                    <input id="amount" type="text" value="" name="amount">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-6">
+                                            <div class="form-group row mb-4">
+                                                <label for="amount" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Agence</label>
+                                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                                    <select id="agence" name="agence" class="selectpicker form-control">
+                                                        <option>Abobo</option>
+                                                        <option>Yopougon</option>
+                                                        <option>Angré</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row mb-4">
+                                        <label for="reason" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Motif de la demande</label>
+                                        <div class="col-xl-10 col-lg-9 col-sm-10">
+                                            <textarea class="form-control" id="reason" name="reason" rows="3"></textarea>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
             </div>
         </div>
@@ -196,10 +232,18 @@
     <script src="{{asset('plugins/input-mask/jquery.inputmask.bundle.min.js')}}"></script>
     <script src="{{asset('plugins/input-mask/input-mask.js')}}"></script>
     <script src="{{asset('plugins/flatpickr/flatpickr.js')}}"></script>
+    <script src="{{asset('plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js')}}"></script>
     <script>
         $("#account_credit").inputmask({mask:"CI221019999999999"});
         var period = flatpickr($("#period"), {
             mode: "range"
         })
+
+        $("input[name='amount']").TouchSpin({
+            verticalbuttons: true,
+            buttondown_class: "btn btn-classic btn-outline-info",
+            buttonup_class: "btn btn-classic btn-outline-danger"
+        });
+
     </script>
 @endsection
