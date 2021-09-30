@@ -34,17 +34,19 @@ class AccountRequestsController extends Controller
         $account_requests = Client::all();
         return view('admin.account_requests.index', [
             'account_requests' => $account_requests
-            ]);
+        ]);
     }
 
-    public function show(string $trackId){
-        $account = Client::where('track_id',$trackId)->first();
+    public function show(string $trackId)
+    {
+        $account = Client::where('track_id', $trackId)->first();
 
         return view("admin.account_requests.show", ["account" => $account]);
     }
 
-    public function changeStatus(string $trackId){
-        $client = Client::where('track_id',$trackId)->first();
+    public function changeStatus(string $trackId)
+    {
+        $client = Client::where('track_id', $trackId)->first();
 
         $reqStatus = intval(request('status'));
 
@@ -52,12 +54,13 @@ class AccountRequestsController extends Controller
 
         $client->save();
 
-        if($client->statut_ouverture_compte != Client::STATUT['VALIDATION']){
-            
+        if ($client->statut_ouverture_compte != Client::STATUT['VALIDATION']) {
+
             CompteRejected::dispatch($client);
 
             return redirect()->action(
-                [AccountRequestsController::class, 'show'], ['trackId' => $client->track_id]
+                [AccountRequestsController::class, 'show'],
+                ['trackId' => $client->track_id]
             )->with('reject_message', 'L\'ouverture du compte a été rejété avec success !');
         }
 
@@ -65,7 +68,7 @@ class AccountRequestsController extends Controller
 
         $choiceOfAccount = explode(",", $client->choix_type_compte);
 
-        foreach($choiceOfAccount as &$choice){
+        foreach ($choiceOfAccount as &$choice) {
             $account = new Compte();
 
             $zerosForAccount = "000000000000";
@@ -87,12 +90,14 @@ class AccountRequestsController extends Controller
 
 
         return redirect()->action(
-            [AccountRequestsController::class, 'show'], ['trackId' => $client->track_id]
+            [AccountRequestsController::class, 'show'],
+            ['trackId' => $client->track_id]
         )->with('validate_message', 'Le compte été confirmé avec succès, vous pouvez maintenant l\'activer !');
     }
 
-    public function activate(string $trackId){
-        $client = Client::where('track_id',$trackId)->first();
+    public function activate(string $trackId)
+    {
+        $client = Client::where('track_id', $trackId)->first();
         $client->statut_ouverture_compte = 3;
 
         $zerosForCusNum = "000000";
@@ -117,28 +122,29 @@ class AccountRequestsController extends Controller
         // dd();
 
         return redirect()->action(
-            [AccountRequestsController::class, 'show'], ['trackId' => $client->track_id]
+            [AccountRequestsController::class, 'show'],
+            ['trackId' => $client->track_id]
         )->with('validate_message', 'Le compte été activé avec succès !');;
     }
 
     public function block(String $trackId)
     {
-        $client = Client::where('track_id',$trackId)->first();
+        $client = Client::where('track_id', $trackId)->first();
         $client->statut_ouverture_compte = Client::STATUT['BLOQUER'];
         $client->save();
-        $user = User::where("client_id",$client->id)->first();
+        $user = User::where("client_id", $client->id)->first();
         if (!is_null($user)) {
             $user->enabled = 0;
-            $user->password = \Hash::make("default newbank client");
-            
+            $user->password = Hash::make("default newbank client");
+
             $user->save();
-        }        
+        }
 
         CompteBlocked::dispatch($client);
 
         return redirect()->back()->with(
-            'reject_message', 'Le compte a été bloqué avec success !'
+            'reject_message',
+            'Le compte a été bloqué avec success !'
         );
-                
     }
 }

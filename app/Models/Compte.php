@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Client;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Compte extends Model
 {
@@ -14,11 +15,13 @@ class Compte extends Model
         "EPARGNE" => 2
     ];
 
-    public function client(){
+    public function client()
+    {
         return $this->belongsTo(Client::class);
     }
 
-    public function carte(){
+    public function carte()
+    {
         return $this->hasOne(Carte::class);
     }
 }

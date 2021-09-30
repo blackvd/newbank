@@ -31,19 +31,76 @@
                     <table id="datatable" class="table style-1 dt-table-hover non-hover">
                         <thead>
                         <tr>
-                            <th>Nom complet</th>
-                            <th>Numéro de compte</th>
-                            <th>Type de compte</th>
-                            <th>Solde</th>
+                            <th >Nom complet</th>
+                            <th >Numéro de compte</th>
+                            <th rowspan="2">Type de compte</th>
+                            <th>Solde(Francs cfa)</th>
                             <th>Statut</th>
                             <th class="text-center dt-no-sorting">Action</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($accounts as $account)
+                            @foreach ($clients as $item)
                             <tr>
                                 <td>
-                                    {{$account->client->civilite == "M" ? "M." : $account->client->civilite}} {{$account->client->nom}} {{$account->client->prenoms}}
+                                    {{ $item->civilite ?? ""}}
+                                    {{ $item->nom ?? ""}}
+                                    {{ $item->prenoms ?? ""}}
+                                </td>
+                                <td >
+                                    @foreach ($item->comptes as $compte)
+                                        {{ $compte->numero_compte}}<br/>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach ($item->comptes as $compte)
+                                        {{ $compte->type_compte ==1 ?"Courant":"Epargne" }}<br/>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach ($item->comptes as $compte)
+                                        {{ $compte->solde ?? ")" }}<br/>
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @if ($item->statut_ouverture_compte == 1)
+                                    EN ATTENTE
+                                    @endif
+                                    @if ($item->statut_ouverture_compte == 2)
+                                    VALIDATION
+                                    @endif
+                                    @if ($item->statut_ouverture_compte == 3)
+                                    OUVERT
+                                    @endif
+                                    @if ($item->statut_ouverture_compte == 0)
+                                    DESACTIVÉ
+                                    @endif
+                                    @if ($item->statut_ouverture_compte == -1)
+                                    REJÉTÉ
+                                    @endif
+                                    @if ($item->statut_ouverture_compte == -2)
+                                    BLOQUER
+                                    @endif
+                                </td>
+                                <td class="text-center">
+                                    <div class="dropdown">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                        </a>
+    
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                                            <a class="dropdown-item" href="{{route('admin.account_requests.show', $item->track_id)}}">Détails</a>
+                                            <a class="dropdown-item" href="{{route('admin.account_requests.block_account', $item->track_id)}}">Bloquer</a>
+                                        </div>
+                                    </div>
+                                </td>
+
+                            </tr>
+                            @endforeach
+                        {{--  @foreach($accounts as $account)
+                            <tr>
+                                <td>
+                                    {{$account->client->civilite ." ".$account->client->nom ." ". $account->client->prenoms}}
                                 </td>
                                 <td>
                                     {{$account->numero_compte}}
@@ -57,7 +114,7 @@
                                 <td></td>
                                 <td></td>
                             </tr>
-                        @endforeach
+                        @endforeach  --}}
                         </tbody>
                     </table>
                 </div>

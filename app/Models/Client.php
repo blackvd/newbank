@@ -18,23 +18,29 @@ class Client extends Model
         "BLOQUER" => -2
     ];
 
-    public function user(){
+
+    public function user()
+    {
         return $this->hasOne(User::class);
     }
 
-    public function identification(){
+    public function identification()
+    {
         return $this->hasOne(Identification::class);
     }
 
-    public function comptes(){
+    public function comptes()
+    {
         return $this->hasMany(Compte::class);
     }
 
-    public function commandes(){
+    public function commandes()
+    {
         return $this->hasMany(Commande::class);
     }
 
-    public function handleBy(){
+    public function handleBy()
+    {
         return $this->belongsTo(Admin::class, 'admin_code');
     }
 }

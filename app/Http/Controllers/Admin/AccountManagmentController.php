@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\Compte;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class AccountManagmentController extends Controller
 {
@@ -20,8 +21,10 @@ class AccountManagmentController extends Controller
 
     public function index()
     {
-        $accounts = Compte::all()->sortByDesc("created_at");
+        // $accounts = Compte::all()->sortByDesc("created_at");
+        $clients = Client::all()->sortByDesc("created_at");
+        // dd($accounts[0]->client->civilite);
 
-        return view("admin.account_managments.index", ["accounts" => $accounts]);
+        return view("admin.account_managments.index", compact('clients'));
     }
 }
