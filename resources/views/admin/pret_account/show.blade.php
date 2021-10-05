@@ -188,8 +188,8 @@
                         <input type="text" class="form-control" id="" value="{{$client->sec}}" readonly>
                     </div>
                     <div class="form-group col-6">
-                        <label for="">Objet du compte</label>
-                        <input type="text" class="form-control" id="" value="{{$client->objet_compte}}" readonly>
+                        <label for="">Montant du pret</label>
+                        <input type="text" class="form-control" id="" value="{{$client->prets()->latest()->first()->montant}}" readonly>
                     </div>
                 </div>
 
