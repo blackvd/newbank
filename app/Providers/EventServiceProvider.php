@@ -2,11 +2,13 @@
 
 namespace App\Providers;
 
+use App\Events\CardBlock;
 use App\Events\CompteOpened;
 use App\Events\CompteBlocked;
 use App\Events\CompteRejected;
 use App\Events\ClientRegistered;
 use App\Events\PretRejected;
+use App\Listeners\CardBlockListener;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\CompteOpenedListener;
@@ -42,7 +44,8 @@ class EventServiceProvider extends ServiceProvider
         ],
         PretRejected::class => [
             PretRejectedListener::class
-        ]
+        ],
+        CardBlock::class => [CardBlockListener::class,],
     ];
 
     /**

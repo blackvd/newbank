@@ -48,7 +48,7 @@
                                     <td>{{ $carte->no_carte }}</td>
                                     <td>{{ $carte->created_at }}</td>
                                     <td>COURANT</td>
-                                    <td>{{ $carte->type_carte == 2 ? "VISA":"" }}</td>
+                                    <td>{{ $carte->type_carte == 2 ? "VISA":"AUtre" }}</td>
                                     <td>{{ $carte->statut == 1 ? "activer":"desactiver"}}</td>
                                     <td >
                                     @if ($carte->statut == 1 )
@@ -56,11 +56,11 @@
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shield-off"><path d="M19.69 14a6.9 6.9 0 0 0 .31-2V5l-8-3-3.16 1.18"></path><path d="M4.73 4.73L4 5v7c0 6 8 10 8 10a20.29 20.29 0 0 0 5.62-4.38"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
                                         </a>
                                         <input type="hidden" value="{{$carte->no_carte}}" id="carte_no">                                            
+                                    @else
+                                        <p class="text-danger">
+                                            vous avez desactiver cette carte
+                                        </p>
                                     @endif
-                                    <p class="text-danger">
-                                        vous avez desactiver cette carte
-
-                                    </p>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -101,7 +101,8 @@
                     }).catch(function(error){
                         console.log(error.statustext)
                         Swal.showValidationMessage(
-                                `La requete a echouer: Votre carte a ete deja desactiver`
+                                {{-- `La requete a echouer: Votre carte a ete deja desactiver` --}}
+                                error
                             ),
                         console.log(error);
                     });

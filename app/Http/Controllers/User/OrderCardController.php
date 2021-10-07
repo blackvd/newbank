@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Events\CardBlock;
 use Carbon\Carbon;
 use App\Models\Carte;
 use App\Models\Client;
@@ -90,6 +91,7 @@ class OrderCardController extends Controller
     public function bloquer(Request $request)
     {
         $carte = Carte::where('no_carte', $request->numero)->first();
+        $client = $carte->compte->client()->first();
         try {
 
             DB::beginTransaction();
@@ -98,7 +100,11 @@ class OrderCardController extends Controller
             }
             $carte->statut = 0;
             $carte->save();
+
+            CardBlock::dispatch($client);
+
             DB::commit();
+
 
             return response()->json(['message' => "Votre carte vient d'etre bloquer, merci d'en commander une autre"]);
         } catch (\Throwable $th) {
