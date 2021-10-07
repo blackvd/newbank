@@ -36,6 +36,8 @@ Route::get('/', [AccountController::class, 'index'])->name('account');
 
 Route::get('/order-card', [OrderCardController::class, 'index'])->name('order-card');
 Route::post('/order-card', [OrderCardController::class, 'orderCard'])->name('submit_order');
+Route::get('/card', [OrderCardController::class, 'cards'])->name('cards');
+Route::post('/block-card', [OrderCardController::class, 'bloquer'])->name('block_card');
 
 Route::post('/pret', [PretController::class, 'askPret'])->name('pret.ask');
 

@@ -44,15 +44,20 @@
                             <th>Compte associé</th>
                             <th>Action</th>
                             </thead>
-                            {{--  {{ dd($user->commandes) }}  --}}
-                            @if ( count($user->commandes)>=1 )
+                            @if ( count($client->commandes)>=1 )
                                 <tbody>
-                                    @foreach ($user->commandes as $commande)
+                                    @foreach ($client->commandes as $commande)
                                     <tr>
                                         <td>{{ $commande->no_commande }}</td>
                                         <td>{{ $commande->created_at }}</td>
-                                        <td>{{ count($user->commandes) }}</td>
+                                        <td>{{ count($client->commandes) }}</td>
                                         <td>{{ $commande->type_de_compte }}</td>
+                                        <td >
+                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" title="annuler" aria-expanded="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+                                            </a>
+
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -79,19 +84,28 @@
                         <div class="form-group mb-4">
                             <label for="account_type">Compte(s)</label>
                             <select class="selectpicker form-control" id="account_type" name="account_type" multiple aria-describedby="chooseAccountHelp">
-                                @foreach($user->comptes as $account)
+                                @foreach($client->comptes as $account)
                                     <option value="{{$account->type_compte}}">{{$account->type_compte == 1 ? 'Compte courant' : 'Compte épargne'}}</option>
                                 @endforeach
                             </select>
                             <small id="chooseAccountHelp" class="form-text text-muted">Choisissez le(s) compte(s) à lier à(aux) cartes</small>
                         </div>
                         <div class="form-group mb-4">
-                            <label for="inputAddress">Adresse de livraison</label>
-                            <input type="text" class="form-control" id="address" name="adresse_for_delivred" placeholder="Yopougon toit rouge">
+                            <label for="agence">Adresse de livraison</label>
+                            <select id="agence" name="adresse_for_delivred" class="selectpicker form-control" required>
+                                <option value="abobo">Abobo</option>
+                                <option value="yopougon">Yopougon</option>
+                                <option value="angre">Angré</option>
+                            </select>
                         </div>
+                        <div class="form-group row mb-4">
+                            <label for="visa" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">VISA</label>
+                            <input type="checkbox" name="visa" id="visa" checked>
+                        </div>
+
                         <div class="modal-footer">
                             <button class="btn" data-dismiss="modal"><i class="flaticon-cancel-12"></i> Annuler</button>
-                            <button type="submit" name="valide" class="btn btn-primary">Commander</button>
+                            <button type="submit" class="btn btn-primary">Commander</button>
                         </div>
                     </form>
                 </div>

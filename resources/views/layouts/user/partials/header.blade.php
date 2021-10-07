@@ -49,9 +49,18 @@
                         <li class="menu single-menu">
                             <a href="{{route('order-card')}}">
                                 <div class="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                                    <span>Commander sa carte</span>
+                                </div>
+                            </a>
+                        </li>
+
+                        <li class="menu single-menu">
+                            <a href="{{route('cards')}}">
+                                <div class="">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
 
-                                    <span>Commander sa carte</span>
+                                    <span>Mes cartes</span>
                                 </div>
                             </a>
                         </li>
@@ -74,14 +83,14 @@
             <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1">
                 <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="user-profile-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media">
-                        <img src="{{ substr($user->identification->photo,5)==".jpg" ? asset('userImage/'.$user->track_id.'/PHOTO.jpg') : asset('userImage/'.$user->track_id.'/PHOTO.png') }}" class="img-fluid" style="height: 40px;width: 40px;" alt="user">
+                        <img src="{{ substr($client->identification->photo,5)==".jpg" ? asset('userImage/'.$client->track_id.'/PHOTO.jpg') : asset('userImage/'.$client->track_id.'/PHOTO.png') }}" class="img-fluid" style="height: 40px;width: 40px;" alt="user">
                     </div>
                 </a>
                 <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
                     <div class="user-profile-section">
                         <div class="media mx-auto">
                             <div class="media-body">
-                                <h5>{{$user->nom}} {{$user->prenoms}}</h5>
+                                <h5>{{$client->nom}} {{$client->prenoms}}</h5>
                             </div>
                         </div>
                     </div>
