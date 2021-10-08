@@ -77,7 +77,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($user->comptes as $account)
+                                        @foreach($client->comptes as $account)
                                             <tr>
                                                 <td>{{$account->numero_compte}}</td>
                                                 <td>{{$account->type_compte == 1 ? "Courant" : "Épargne"}}</td>
@@ -91,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                @if(count($user->comptes) <= 1)
+                                @if(count($client->comptes) <= 1)
                                     <div class="alert alert-light-danger border-0 mb-4" role="alert">
                                         <strong>Fonctionnalité indisponible ! </strong> vous n'avez qu'un seul compte
                                     </div>
@@ -101,7 +101,7 @@
                                             <label for="account_debit" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à débiter</label>
                                             <div class="col-xl-10 col-lg-9 col-sm-10">
                                                 <select name="account_debit" id="account_debit" class="form-control selectpicker">
-                                                    @foreach($user->comptes as $account)
+                                                    @foreach($client->comptes as $account)
                                                         <option value="{{$account->id}}">{{$account->numero_compte}}</option>
                                                     @endforeach
                                                 </select>
@@ -138,7 +138,7 @@
                                         <label for="account_debit" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à débiter</label>
                                         <div class="col-xl-10 col-lg-9 col-sm-10">
                                             <select name="account_debit" id="account_debit" class="form-control selectpicker">
-                                                @foreach($user->comptes as $account)
+                                                @foreach($client->comptes as $account)
                                                     <option value="{{$account->id}}">{{$account->numero_compte}}</option>
                                                 @endforeach
                                             </select>
@@ -222,7 +222,7 @@
                                             <textarea class="form-control" id="reason" name="reason" rows="3" ></textarea>
                                         </div>
                                     </div>
-                                    <input type="hidden" name="user" value="{{$user->id}}">
+                                    <input type="hidden" name="user" value="{{$client->id}}">
                                     <button type="submit" class="btn btn-primary">Soumettre</button>
                                 </form>
                             </div>
