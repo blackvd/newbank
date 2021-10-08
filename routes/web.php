@@ -2,7 +2,9 @@
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\PretController;
 use App\Http\Controllers\OpenAccountController;
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\OrderCardController;
@@ -33,18 +35,28 @@ Route::post('/first-login', [App\Http\Controllers\Auth\LoginController::class, '
 Route::get('/', [AccountController::class, 'index'])->name('account');
 
 Route::get('/order-card', [OrderCardController::class, 'index'])->name('order-card');
-Route::post('/order-card', [OrderCardController::class,'orderCard'])->name('submit_order');
+Route::post('/order-card', [OrderCardController::class, 'orderCard'])->name('submit_order');
+
+Route::post('/pret', [PretController::class, 'askPret'])->name('pret.ask');
 
 
 
 
-
-Route::group(['prefix'=>"admin"],function () {
-    Route::get('/login', [AdminLoginController::class,'showAdminLogin'])->name('admin.login');
-    Route::post('/login', [AdminLoginController::class,'adminLogin'])->name('admin.postLogin');
-    Route::post('/logout', [AdminLoginController::class,'adminLogout'])->name('admin.postLogout');
+Route::group(['prefix' => "admin"], function () {
+    Route::get('/login', [AdminLoginController::class, 'showAdminLogin'])->name('admin.login');
+    Route::post('/login', [AdminLoginController::class, 'adminLogin'])->name('admin.postLogin');
+    Route::post('/logout', [AdminLoginController::class, 'adminLogout'])->name('admin.postLogout');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    // Demande de pret 
+    Route::get('/pret', [PretController::class, "index"])->name('pret.index');
+    Route::get('/pret/{id}', [PretController::class, "show"])->name('pret.show');
+    Route::get('/pret/reject/{id}', [PretController::class, "reject"])->name('pret.reject');
+    Route::post('/pret/eligibilite/{id}', [PretController::class, "eligibilite"])->name('pret.eligibilite');
+    Route::post('/pret/accorder/{id}', [PretController::class, "accorder"])->name('pret.accorder');
+
+    // Fin de demande de pret
 
     Route::get('/account_requests', [AccountRequestsController::class, 'index'])->name('admin.account_requests');
     Route::get('/account_requests/{trackId}', [AccountRequestsController::class, 'show'])->name('admin.account_requests.show');
@@ -54,5 +66,3 @@ Route::group(['prefix'=>"admin"],function () {
 
     Route::get('/account_managments', [AccountManagmentController::class, 'index'])->name('admin.account_managements');
 });
-
-

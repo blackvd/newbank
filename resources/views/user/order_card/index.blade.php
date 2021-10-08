@@ -25,6 +25,9 @@
     </div>
 
     <div class="row layout-top-spacing">
+        <div class="col-lg-12 col-12">
+            @include('layouts.user.partials.alert')
+        </div>
         <div id="tableSimple" class="col-lg-12 col-12 layout-spacing">
             <div class="statbox widget box box-shadow">
                 <div class="widget-content widget-content-area">

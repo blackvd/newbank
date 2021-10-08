@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Pret;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Client extends Model
 {
@@ -38,6 +39,13 @@ class Client extends Model
     {
         return $this->hasMany(Commande::class);
     }
+
+
+    public function prets()
+    {
+        return $this->hasMany(Pret::class);
+    }
+
 
     public function handleBy()
     {

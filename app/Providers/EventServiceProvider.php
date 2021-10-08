@@ -6,11 +6,13 @@ use App\Events\CompteOpened;
 use App\Events\CompteBlocked;
 use App\Events\CompteRejected;
 use App\Events\ClientRegistered;
+use App\Events\PretRejected;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Listeners\CompteOpenedListener;
 use App\Listeners\SendEmailNotification;
 use App\Listeners\CompteRejectedListener;
+use App\Listeners\PretRejectedListener;
 use App\Listeners\SendBlockedNotification;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -29,14 +31,17 @@ class EventServiceProvider extends ServiceProvider
         ClientRegistered::class => [
             SendEmailNotification::class,
         ],
-        CompteBlocked::class =>[
+        CompteBlocked::class => [
             SendBlockedNotification::class,
         ],
-        CompteOpened::class =>[
+        CompteOpened::class => [
             CompteOpenedListener::class,
         ],
         CompteRejected::class => [
             CompteRejectedListener::class,
+        ],
+        PretRejected::class => [
+            PretRejectedListener::class
         ]
     ];
 
