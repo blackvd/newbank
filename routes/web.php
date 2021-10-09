@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\PretController;
 use App\Http\Controllers\OpenAccountController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\OrderCardController;
 use App\Http\Controllers\Admin\DashboardController;
@@ -41,6 +42,9 @@ Route::post('/block-card', [OrderCardController::class, 'bloquer'])->name('block
 
 Route::post('/pret', [PretController::class, 'askPret'])->name('pret.ask');
 
+// transactions des compte
+Route::post('/transaction/inte', [TransactionController::class, "storeInt"])->name('trans_inter_compte');
+Route::post('/transaction/ext', [TransactionController::class, "storeExt"])->name('trans_ext_compte');
 
 
 

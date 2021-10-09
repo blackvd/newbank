@@ -101,8 +101,7 @@
                     }).catch(function(error){
                         console.log(error.statustext)
                         Swal.showValidationMessage(
-                                {{-- `La requete a echouer: Votre carte a ete deja desactiver` --}}
-                                error
+                                `La requete a echouer: Votre carte a ete deja desactiver`
                             ),
                         console.log(error);
                     });
