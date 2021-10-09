@@ -28,6 +28,6 @@ class PretDoneMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.done_pret');
+        return $this->view('emails.done_pret')->subject('Accord de pret');
     }
 }

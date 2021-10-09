@@ -34,6 +34,6 @@ class CardBlockMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.card_block');
+        return $this->view('emails.card_block')->subject("Bloquer sa carte");
     }
 }

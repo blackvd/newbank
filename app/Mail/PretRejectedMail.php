@@ -28,6 +28,6 @@ class PretRejectedMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.reject_pret');
+        return $this->view('emails.reject_pret')->subject('reject de pret');
     }
 }

@@ -33,6 +33,6 @@ class RibAskMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.rib');
+        return $this->view('emails.rib')->subject("Demande du rib par mail");
     }
 }

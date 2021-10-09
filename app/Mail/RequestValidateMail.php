@@ -28,7 +28,7 @@ class RequestValidateMail extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user,Compte $compte)
+    public function __construct(User $user, Compte $compte)
     {
         $this->user = $user;
         $this->compte = $compte;
@@ -41,6 +41,6 @@ class RequestValidateMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.request_validate');
+        return $this->view('emails.request_validate')->subject('Validation');
     }
 }

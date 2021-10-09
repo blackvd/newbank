@@ -36,6 +36,6 @@ class AccountOpenMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.open_account');
+        return $this->view('email.open_account')->subject("Ouverture de compte");
     }
 }

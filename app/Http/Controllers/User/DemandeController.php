@@ -11,21 +11,19 @@ use App\Http\Controllers\Controller;
 use App\Mail\RibAskMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Session;
 
 class DemandeController extends Controller
 {
     public function rib(Request $request)
     {
-        dd($request);
         $pdf = App::make('dompdf.wrapper');
 
         $client = Client::where('id', Auth::user()->client_id)->first();
         $compte = Compte::findOrfail($request->compte)->first();
-        // dd($compte);
-        // dd($client);
-        // $pdf = PDF::loadView('email.rib', compact(["compte", "client"]));
         $pdf = $pdf->loadView('emails.rib', compact(['compte', 'client']));
 
+        $request->flash();
 
         switch ($request->options) {
             case 'mail':
@@ -35,10 +33,12 @@ class DemandeController extends Controller
 
             case 'two':
                 Mail::to($client->email)->send(new RibAskMail($client, $compte));
+                Session::flash('success', 'telechargement du pdf et l\'envoie de mail, merci de nous avoir fait confiance');
                 return $pdf->download($compte->numero_compte . "-rib.pdf");
                 break;
 
             case 'download':
+                Session::flash('success', 'Telechargement en cours, merci de nous avoir fait confiance');
                 return $pdf->download($compte->numero_compte . "-rib.pdf");
                 break;
 

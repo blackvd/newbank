@@ -32,6 +32,6 @@ class AccountBlockMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.compte_block');
+        return $this->view('emails.compte_block')->subject("Suppression de compte");
     }
 }
