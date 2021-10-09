@@ -174,20 +174,35 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="rib" role="tabpanel" aria-labelledby="rib-tab">
-                        <form action="">
-                            <div class="form-group row mb-4">
-                                <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Options</label>
-                                <div class="col-xl-10 col-lg-9 col-sm-10">
-                                    <select id="options" name="options" class="selectpicker form-control">
-                                        <option>Télécharger</option>
-                                        <option>Recevoir par mail</option>
-                                        <option>Télécharger & recevoir par mail</option>
-                                    </select>
+                            <form action="{{ route('demande_rib') }}" method="post" id="ribForm">
+                                @csrf
+                                <div class="form-group row mb-4">
+                                    <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Options</label>
+                                    <div class="col-xl-10 col-lg-9 col-sm-10">
+                                        <select id="options" name="options" class="selectpicker form-control">
+                                            <option value="download">Télécharger</option>
+                                            <option value="mail">Recevoir par mail</option>
+                                            <option value="two">Télécharger & recevoir par mail</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <button type="submit" class="btn btn-primary mt-3">Soumettre</button>
-                        </form>
+                                <div class="form-group row mb-4">
+                                    <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte</label>
+                                    <div class="col-xl-10 col-lg-9 col-sm-10">
+                                        <select name="compte" id="compte_id" class="selectpicker form-control">
+                                            @foreach ($client->comptes as $account)
+                                                <option value="{{$account->id}}">
+                                                    {{$account->numero_compte}} - {{$account->type_compte == 1 ? "Courant":"Epargne"}} 
+                                                </option>                                          
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    
+                                </div>
+
+                            </form>
+                            <button id="ribBtn" class="btn btn-primary mt-3">Soumettre</button>                            
                     </div>
                     <div class="tab-pane fade" id="bilan" role="tabpanel" aria-labelledby="bilan-tab">
                         <form action="" class="form-inline justify-content-center">
