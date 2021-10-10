@@ -26,6 +26,9 @@
 </div>
 
 <div class="row layout-top-spacing">
+    <div class="col-lg-12 col-12">
+        @include('layouts.user.partials.alert')
+    </div>
     <div class="col-lg-12 col-12 layout-spacing">
         <div class="statbox widget box box-shadow">
             <div class="widget-header">
@@ -74,7 +77,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        @foreach($user->comptes as $account)
+                                        @foreach($client->comptes as $account)
                                             <tr>
                                                 <td>{{$account->numero_compte}}</td>
                                                 <td>{{$account->type_compte == 1 ? "Courant" : "Épargne"}}</td>
@@ -88,7 +91,7 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                @if(count($user->comptes) <= 1)
+                                @if(count($client->comptes) <= 1)
                                     <div class="alert alert-light-danger border-0 mb-4" role="alert">
                                         <strong>Fonctionnalité indisponible ! </strong> vous n'avez qu'un seul compte
                                     </div>
@@ -98,7 +101,7 @@
                                             <label for="account_debit" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à débiter</label>
                                             <div class="col-xl-10 col-lg-9 col-sm-10">
                                                 <select name="account_debit" id="account_debit" class="form-control selectpicker">
-                                                    @foreach($user->comptes as $account)
+                                                    @foreach($client->comptes as $account)
                                                         <option value="{{$account->id}}">{{$account->numero_compte}}</option>
                                                     @endforeach
                                                 </select>
@@ -135,7 +138,7 @@
                                         <label for="account_debit" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à débiter</label>
                                         <div class="col-xl-10 col-lg-9 col-sm-10">
                                             <select name="account_debit" id="account_debit" class="form-control selectpicker">
-                                                @foreach($user->comptes as $account)
+                                                @foreach($client->comptes as $account)
                                                     <option value="{{$account->id}}">{{$account->numero_compte}}</option>
                                                 @endforeach
                                             </select>
@@ -187,25 +190,26 @@
                                 </form>
                             </div>
                             <div class="tab-pane fade" id="loan" role="tabpanel" aria-labelledby="loan-tab">
-                                <form action="" class="">
+                                <form action="{{ route('pret.ask') }}" method="Post" class="">
+                                    @csrf
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="form-group row mb-4">
                                                 <label for="amount" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant du prêt</label>
                                                 <div class="col-xl-10 col-lg-9 col-sm-10">
-                                                    <input id="amount" type="text" value="" name="amount">
+                                                    <input id="amount" type="text" value="" name="amount" required pattern="[0-9]{6,}">
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="col-6">
                                             <div class="form-group row mb-4">
-                                                <label for="amount" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Agence</label>
+                                                <label for="agence" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Agence</label>
                                                 <div class="col-xl-10 col-lg-9 col-sm-10">
-                                                    <select id="agence" name="agence" class="selectpicker form-control">
-                                                        <option>Abobo</option>
-                                                        <option>Yopougon</option>
-                                                        <option>Angré</option>
+                                                    <select id="agence" name="agence" class="selectpicker form-control" required>
+                                                        <option value="abobo">Abobo</option>
+                                                        <option value="yopougon">Yopougon</option>
+                                                        <option value="angre">Angré</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -215,9 +219,11 @@
                                     <div class="form-group row mb-4">
                                         <label for="reason" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Motif de la demande</label>
                                         <div class="col-xl-10 col-lg-9 col-sm-10">
-                                            <textarea class="form-control" id="reason" name="reason" rows="3"></textarea>
+                                            <textarea class="form-control" id="reason" name="reason" rows="3" ></textarea>
                                         </div>
                                     </div>
+                                    <input type="hidden" name="user" value="{{$client->id}}">
+                                    <button type="submit" class="btn btn-primary">Soumettre</button>
                                 </form>
                             </div>
                         </div>
@@ -236,14 +242,16 @@
     <script>
         $("#account_credit").inputmask({mask:"CI221019999999999"});
         var period = flatpickr($("#period"), {
-            mode: "range"
+        mode: 'range',
         })
 
         $("input[name='amount']").TouchSpin({
             verticalbuttons: true,
+            min:200000,
+            max:4999999,
+            step:10000,
             buttondown_class: "btn btn-classic btn-outline-info",
             buttonup_class: "btn btn-classic btn-outline-danger"
         });
-
     </script>
 @endsection

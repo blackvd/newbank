@@ -25,6 +25,9 @@
     </div>
 
     <div class="row layout-spacing">
+        <div class="col-lg-12 col-12">
+            @include('layouts.admin.partials.alert')
+        </div>
         <div class="col-lg-12">
             <div class="statbox widget box box-shadow">
                 <div class="widget-content widget-content-area">
@@ -33,7 +36,7 @@
                         <tr>
                             <th >Nom complet</th>
                             <th >Numéro de compte</th>
-                            <th rowspan="2">Type de compte</th>
+                            <th>Type de compte</th>
                             <th>Solde(Francs cfa)</th>
                             <th>Statut</th>
                             <th class="text-center dt-no-sorting">Action</th>
@@ -59,7 +62,7 @@
                                 </td>
                                 <td>
                                     @foreach ($item->comptes as $compte)
-                                        {{ $compte->solde ?? ")" }}<br/>
+                                        {{ $compte->solde ?? "0" }}<br/>
                                     @endforeach
                                 </td>
                                 <td>
@@ -97,24 +100,6 @@
 
                             </tr>
                             @endforeach
-                        {{--  @foreach($accounts as $account)
-                            <tr>
-                                <td>
-                                    {{$account->client->civilite ." ".$account->client->nom ." ". $account->client->prenoms}}
-                                </td>
-                                <td>
-                                    {{$account->numero_compte}}
-                                </td>
-                                <td>
-                                    {{$account->type_compte == 1 ? "Courant" : "Épargne"}}
-                                </td>
-                                <td>
-                                    {{$account->solde}}
-                                </td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                        @endforeach  --}}
                         </tbody>
                     </table>
                 </div>
@@ -129,17 +114,23 @@
         // var e;
         c2 = $('#datatable').DataTable({
             "dom": "<'dt--top-section'<'row'<'col-12 col-sm-6 d-flex justify-content-sm-start justify-content-center'l><'col-12 col-sm-6 d-flex justify-content-sm-end justify-content-center mt-sm-0 mt-3'f>>>" +
-                "<'table-responsive'tr>" +
-                "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
+        "<'table-responsive'tr>" +
+        "<'dt--bottom-section d-sm-flex justify-content-sm-between text-center'<'dt--pages-count  mb-sm-0 mb-3'i><'dt--pagination'p>>",
             "oLanguage": {
-                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' },
-                "sInfo": "Showing page _PAGE_ of _PAGES_",
+                "oPaginate": { "sPrevious": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>', 
+                                "sNext": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>' 
+                            },
+                "sInfo": "Page _PAGE_ / _PAGES_",
                 "sSearch": '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>',
-                "sSearchPlaceholder": "Search...",
-                "sLengthMenu": "Results :  _MENU_",
+                "sSearchPlaceholder": "Recherche",
+                "sLengthMenu": "Resultats :  _MENU_",
+                "sEmptyTable": "Aucune donnée disponible dans le tableau",
+                "sZeroRecords": "Aucune entree trouver",
+                "sLengthMenu":  "Affichage _MENU_",
+                "sInfoEmpty":      "Affichage de l'&eacute;lement 0 &agrave; 0 sur 0 &eacute;l&eacute;ments",
             },
             "lengthMenu": [5, 10, 20, 50],
-            "pageLength": 5
+            "pageLength": 5 
         });
     </script>
 @endsection

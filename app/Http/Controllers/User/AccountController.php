@@ -22,7 +22,7 @@ class AccountController extends Controller
 
     public function index()
     {
-        $user = Client::find(Auth::user()->client_id)->first();
-        return view('user.account.index', ['user'=> $user]);
+        $client = Client::where("id", Auth::user()->client_id)->first();
+        return view('user.account.index', ['client' => $client]);
     }
 }

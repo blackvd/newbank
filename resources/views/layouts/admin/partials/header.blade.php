@@ -26,8 +26,8 @@
 
                     <ul class="list-unstyled menu-categories" id="topAccordion">
 
-                        <li class="menu single-menu active">
-                            <a href="/admin/dashboard" data-toggle="collapse" aria-expanded="true" class="dropdown-toggle autodroprown">
+                        <li class="menu single-menu {{ Request::is('admin/dashboard') ? 'active':''}}">
+                            <a href="{{ route('admin.dashboard') }}" >
                                 <div class="">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
 
@@ -36,7 +36,7 @@
                             </a>
                         </li>
 
-                        <li class="menu single-menu">
+                        <li class="menu single-menu {{ Request::is('admin/account_requests') ? 'active':''}}">
                             <a href="{{route("admin.account_requests")}}">
                                 <div class="/">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
@@ -46,7 +46,7 @@
                             </a>
                         </li>
 
-                        <li class="menu single-menu">
+                        <li class="menu single-menu {{ Request::is('admin/account_managments') ? 'active':''}}">
                             <a href="{{route("admin.account_managements")}}">
                                 <div class="/">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
@@ -56,14 +56,25 @@
                             </a>
                         </li>
 
-                        <li class="menu single-menu">
-                            <a href="{{route("admin.account_managements")}}">
+                        <li class="menu single-menu {{ Request::is('admin/pret') ? 'active':''}}">
+                            <a href="{{route("pret.index")}}">
                                 <div class="/">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-dollar-sign"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                                     <span>Gestion Pret</span>
                                 </div>
                             </a>
                         </li>
+
+                        <li class="menu single-menu ">
+                            <a href="{{route("pret.index")}}">
+                                <div class="/">
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>                                    <span>Credit || Debit</span>
+                                </div>
+                            </a>
+                        </li>
+
+
                     </ul>
                 </nav>
             </div>

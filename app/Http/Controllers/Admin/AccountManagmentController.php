@@ -21,10 +21,7 @@ class AccountManagmentController extends Controller
 
     public function index()
     {
-        // $accounts = Compte::all()->sortByDesc("created_at");
         $clients = Client::all()->sortByDesc("created_at");
-        // dd($accounts[0]->client->civilite);
-
         return view("admin.account_managments.index", compact('clients'));
     }
 }
