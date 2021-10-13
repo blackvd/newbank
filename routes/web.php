@@ -51,6 +51,7 @@ Route::post('/transaction/ext', [TransactionController::class, "storeExt"])->nam
 
 Route::post('/demande/rib', [DemandeController::class, "rib"])->name('demande_rib');
 
+Route::post('/demande/relever', [DemandeController::class, "relever"])->name('demande_relever');
 
 
 Route::group(['prefix' => "admin"], function () {

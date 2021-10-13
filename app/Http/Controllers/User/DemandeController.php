@@ -12,6 +12,7 @@ use App\Mail\RibAskMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use PHPUnit\Util\TestDox\CliTestDoxPrinter;
 
 class DemandeController extends Controller
 {
@@ -33,18 +34,29 @@ class DemandeController extends Controller
 
             case 'two':
                 Mail::to($client->email)->send(new RibAskMail($client, $compte));
-                Session::flash('success', 'telechargement du pdf et l\'envoie de mail, merci de nous avoir fait confiance');
+                Session::flash('success', "Téléchargement du pdf et l'envoie de mail, merci de nous avoir fait confiance");
                 return $pdf->download($compte->numero_compte . "-rib.pdf");
                 break;
 
             case 'download':
-                Session::flash('success', 'Telechargement en cours, merci de nous avoir fait confiance');
+                Session::flash('success', "Téléchargement en cours, merci de nous avoir fait confiance");
                 return $pdf->download($compte->numero_compte . "-rib.pdf");
                 break;
 
             default:
-                return redirect()->back()->with('echec', "Veuillez reessayer plus tard merci");
+                return redirect()->back()->with('echec', "Veuillez reéssayer plus tard merci");
                 break;
         }
+    }
+
+    public function relever(Request $request)
+    {
+        $from = substr($request->periode, 0, 10);
+        $to = substr($request->periode, 14);
+        // dd($to);
+        $client = Client::whereBetween('created_at', [$from, $to])->get();
+        dd($client);
+
+        // dd($request->periode);
     }
 }

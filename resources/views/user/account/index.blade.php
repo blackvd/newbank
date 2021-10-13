@@ -174,41 +174,42 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="rib" role="tabpanel" aria-labelledby="rib-tab">
-                            <form action="{{ route('demande_rib') }}" method="post" id="ribForm">
-                                @csrf
-                                <div class="form-group row mb-4">
-                                    <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Options</label>
-                                    <div class="col-xl-10 col-lg-9 col-sm-10">
-                                        <select id="options" name="options" class="selectpicker form-control">
-                                            <option value="download">Télécharger</option>
-                                            <option value="mail">Recevoir par mail</option>
-                                            <option value="two">Télécharger & recevoir par mail</option>
-                                        </select>
-                                    </div>
+                        <form action="{{ route('demande_rib') }}" method="post" id="ribForm">
+                            @csrf
+                            <div class="form-group row mb-4">
+                                <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Options</label>
+                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                    <select id="options" name="options" class="selectpicker form-control">
+                                        <option value="download">Télécharger</option>
+                                        <option value="mail">Recevoir par mail</option>
+                                        <option value="two">Télécharger & recevoir par mail</option>
+                                    </select>
                                 </div>
+                            </div>
 
-                                <div class="form-group row mb-4">
-                                    <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte</label>
-                                    <div class="col-xl-10 col-lg-9 col-sm-10">
-                                        <select name="compte" id="compte_id" class="selectpicker form-control">
-                                            @foreach ($client->comptes as $account)
-                                                <option value="{{$account->id}}">
-                                                    {{$account->numero_compte}} - {{$account->type_compte == 1 ? "Courant":"Epargne"}} 
-                                                </option>                                          
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    
+                            <div class="form-group row mb-4">
+                                <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte</label>
+                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                    <select name="compte" id="compte_id" class="selectpicker form-control">
+                                        @foreach ($client->comptes as $account)
+                                            <option value="{{$account->id}}">
+                                                {{$account->numero_compte}} - {{$account->type_compte == 1 ? "Courant":"Epargne"}} 
+                                            </option>                                          
+                                        @endforeach
+                                    </select>
                                 </div>
+                                
+                            </div>
 
-                            </form>
-                            <button id="ribBtn" class="btn btn-primary mt-3">Soumettre</button>                            
+                        </form>
+                        <button id="ribBtn" class="btn btn-primary mt-3">Soumettre</button>                            
                     </div>
                     <div class="tab-pane fade" id="bilan" role="tabpanel" aria-labelledby="bilan-tab">
-                        <form action="" class="form-inline justify-content-center">
+                        <form action="{{ route('demande_relever') }}" method="POST" class="form-inline justify-content-center">
+                            @csrf
                             <label for="period" class="mr-2">Période</label>
-                            <input id="period" class="form-control flatpickr flatpickr-input active mr-2" type="text" placeholder="Select Date..">
-                            <button type="submit" class="btn btn-primary">Valider</button>
+                            <input id="period" name="periode" class="form-control flatpickr flatpickr-input active mr-2" type="text" placeholder="Select Date..">
+                            <button type="submit" id="releverBtn" class="btn btn-primary">Soumettre</button>
                         </form>
                     </div>
                     <div class="tab-pane fade" id="loan" role="tabpanel" aria-labelledby="loan-tab">
