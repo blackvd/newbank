@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AccountRequestsController;
 use App\Http\Controllers\Admin\AccountManagmentController;
+use App\Http\Controllers\Admin\CardRequestController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,10 +36,12 @@ Route::post('/first-login', [App\Http\Controllers\Auth\LoginController::class, '
 //Route::get('/', [App\Http\Controllers\User\DashboardController::class, 'index'])->name('home');
 Route::get('/', [AccountController::class, 'index'])->name('account');
 
+// Demande de carte client
 Route::get('/order-card', [OrderCardController::class, 'index'])->name('order-card');
 Route::post('/order-card', [OrderCardController::class, 'orderCard'])->name('submit_order');
 Route::get('/card', [OrderCardController::class, 'cards'])->name('cards');
 Route::post('/block-card', [OrderCardController::class, 'bloquer'])->name('block_card');
+// Fin demande de carte client 
 
 Route::post('/pret', [PretController::class, 'askPret'])->name('pret.ask');
 
@@ -59,6 +63,17 @@ Route::group(['prefix' => "admin"], function () {
     Route::post('/pret/accorder/{id}', [PretController::class, "accorder"])->name('pret.accorder');
 
     // Fin de demande de pret
+
+    // Demande de cartes admin
+
+    Route::get('/carte', [CardRequestController::class, "index"])->name('cartes.index');
+    Route::get('/carte/{id}', [CardRequestController::class, "show"])->name('cartes.show');
+    Route::get('/carte/block/{id}', [CardRequestController::class, "bloquer"])->name('cartes.block');
+    Route::post('/carte/delivrer/{id}', [CardRequestController::class, "delivrer"])->name('cartes.delivrer');
+    Route::post('/carte/livraison/{id}', [CardRequestController::class, "livraison"])->name('cartes.livraison');
+
+
+    // Fin demande carte admin 
 
     Route::get('/account_requests', [AccountRequestsController::class, 'index'])->name('admin.account_requests');
     Route::get('/account_requests/{trackId}', [AccountRequestsController::class, 'show'])->name('admin.account_requests.show');

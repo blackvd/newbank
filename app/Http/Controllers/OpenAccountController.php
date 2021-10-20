@@ -10,7 +10,7 @@ use App\Events\ClientRegistered;
 
 class OpenAccountController extends Controller
 {
-    public function Index()
+    public function index()
     {
         return view('open_account');
     }

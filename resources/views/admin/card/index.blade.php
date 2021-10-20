@@ -18,7 +18,7 @@
                 <h3>NewBank</h3>
             </div>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active"  aria-current="page"><a href="javascript:void(0);">Comptes</a></li>
+                <li class="breadcrumb-item active"  aria-current="page"><a href="javascript:void(0);">cartes</a></li>
             </ol>
         </nav>
 
@@ -34,8 +34,9 @@
                     <table id="datatable" class="table style-1 dt-table-hover non-hover">
                         <thead>
                         <tr>
-                            <th >Nom complet</th>
-                            <th >Numéro de compte</th>
+                            <th>Numero commande</th>
+                            <th>Nom complet</th>
+                            <th>Numéro de compte</th>
                             <th>Type de compte</th>
                             <th>Solde(Francs cfa)</th>
                             <th>Statut</th>
@@ -43,56 +44,46 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach ($clients as $item)
+                            @foreach ($commandes as $item)
                             <tr>
                                 <td>
-                                    {{ $item->civilite ?? ""}}
-                                    {{ $item->nom ?? ""}}
-                                    {{ $item->prenoms ?? ""}}
+                                    {{ $item->no_commande ?? ""}}
+                                </td>
+                                <td>
+                                    {{ $item->client->civilite ?? ""}}
+                                    {{ $item->client->nom ?? ""}}
+                                    {{ $item->client->prenoms ?? ""}}
                                 </td>
                                 <td >
-                                    @foreach ($item->comptes as $compte)
+                                    @foreach ($item->client->comptes as $compte)
                                         {{ $compte->numero_compte}}<br/>
                                     @endforeach
                                 </td>
                                 <td>
-                                    @foreach ($item->comptes as $compte)
+                                    @foreach ($item->client->comptes as $compte)
                                         {{ $compte->type_compte ==1 ?"Courant":"Epargne" }}<br/>
                                     @endforeach
                                 </td>
                                 <td>
-                                    @foreach ($item->comptes as $compte)
+                                    @foreach ($item->client->comptes as $compte)
                                         {{ $compte->solde ?? "0" }}<br/>
                                     @endforeach
                                 </td>
                                 <td>
-                                    @if ($item->statut_ouverture_compte == 1)
-                                    <span class="shadow-none badge badge-warning">
+                                    @if ($item->statut == 1)
+                                    <span class="shadow-none badge badge-primary">
                                         EN ATTENTE
                                     </span>
                                     @endif
-                                    @if ($item->statut_ouverture_compte == 2)
-                                    <span class="shadow-none badge badge-secondary">
-                                        VALIDATION
+                                    @if ($item->statut == 2)
+                                    <span class="shadow-none badge badge-warning">
+                                        LIVRAISON
                                     </span>
                                     @endif
-                                    @if ($item->statut_ouverture_compte == 3)
+                                    @if ($item->statut == 3)
                                     <span class="shadow-none badge badge-success">
-                                        OUVERT
+                                        DELIVRÉ
                                     </span>
-                                    @endif
-                                    @if ($item->statut_ouverture_compte == 0)
-                                    <span class="shadow-none badge badge-dark">
-                                        DESACTIVÉ
-                                    </span>
-                                    @endif
-                                    @if ($item->statut_ouverture_compte == -1)
-                                    <span class="shadow-none badge badge-danger">
-                                        REJÉTÉ
-                                    </span>
-                                    @endif
-                                    @if ($item->statut_ouverture_compte == -2)
-                                    BLOQUER
                                     @endif
                                 </td>
                                 <td class="text-center">
@@ -102,8 +93,8 @@
                                         </a>
     
                                         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
-                                            <a class="dropdown-item" href="{{route('admin.account_requests.show', $item->track_id)}}">Détails</a>
-                                            <a class="dropdown-item" href="{{route('admin.account_requests.block_account', $item->track_id)}}">Bloquer</a>
+                                            <a class="dropdown-item" href="{{route('cartes.show', ['id'=>$item->no_commande])}}">Détails</a>
+                                            <a class="dropdown-item" href="{{route('cartes.block', ['id'=>$item->no_commande])}}">Bloquer</a>
                                         </div>
                                     </div>
                                 </td>

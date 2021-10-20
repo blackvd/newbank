@@ -45,33 +45,43 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($account_requests as $request)
+                        @foreach($clients as $client)
                         <tr>
-                            <td>{{$request->track_id}}</td>
-                            <td>{{$request->civilite}}</td>
-                            <td>{{$request->nom}} {{$request->prenoms}}</td>
-                            <td>{{$request->date_naissance}}</td>
-                            <td>{{$request->lieu_naissance}}</td>
-                            <td>{{$request->nationalite}}</td>
+                            <td>{{$client->track_id}}</td>
+                            <td>{{$client->civilite}}</td>
+                            <td>{{$client->nom}} {{$client->prenoms}}</td>
+                            <td>{{$client->date_naissance}}</td>
+                            <td>{{$client->lieu_naissance}}</td>
+                            <td>{{$client->nationalite}}</td>
                             <td>
-                                @if ($request->statut_ouverture_compte == 1)
-                                EN ATTENTE
-                                @endif
-                                @if ($request->statut_ouverture_compte == 2)
-                                VALIDATION
-                                @endif
-                                @if ($request->statut_ouverture_compte == 3)
-                                OUVERT
-                                @endif
-                                @if ($request->statut_ouverture_compte == 0)
-                                DESACTIVÉ
-                                @endif
-                                @if ($request->statut_ouverture_compte == -1)
-                                REJÉTÉ
-                                @endif
-                                @if ($request->statut_ouverture_compte == -2)
-                                BLOQUER
-                                @endif
+                                @if ($client->statut_ouverture_compte == 1)
+                                    <span class="shadow-none badge badge-warning">
+                                        EN ATTENTE
+                                    </span>
+                                    @endif
+                                    @if ($client->statut_ouverture_compte == 2)
+                                    <span class="shadow-none badge badge-secondary">
+                                        VALIDATION
+                                    </span>
+                                    @endif
+                                    @if ($client->statut_ouverture_compte == 3)
+                                    <span class="shadow-none badge badge-success">
+                                        OUVERT
+                                    </span>
+                                    @endif
+                                    @if ($client->statut_ouverture_compte == 0)
+                                    <span class="shadow-none badge badge-dark">
+                                        DESACTIVÉ
+                                    </span>
+                                    @endif
+                                    @if ($client->statut_ouverture_compte == -1)
+                                    <span class="shadow-none badge badge-danger">
+                                        REJÉTÉ
+                                    </span>
+                                    @endif
+                                    @if ($client->statut_ouverture_compte == -2)
+                                    BLOQUER
+                                    @endif
                             </td>
                             <td class="text-center">
                                 <div class="dropdown">
@@ -80,8 +90,8 @@
                                     </a>
 
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
-                                        <a class="dropdown-item" href="{{route('admin.account_requests.show', $request->track_id)}}">Détails</a>
-                                        <a class="dropdown-item" href="{{route('admin.account_requests.block_account', $request->track_id)}}">Bloquer</a>
+                                        <a class="dropdown-item" href="{{route('admin.account_requests.show', $client->track_id)}}">Détails</a>
+                                        <a class="dropdown-item" href="{{route('admin.account_requests.block_account', $client->track_id)}}">Bloquer</a>
                                     </div>
                                 </div>
                             </td>
