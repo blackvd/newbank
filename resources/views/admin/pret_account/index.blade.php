@@ -72,13 +72,19 @@
                                     <td>
                                         @foreach ($client->prets as $pret)
                                             @if ($pret->statut == 0)
-                                            EN ATTENTE
+                                            <span class="shadow-none badge badge-warning">
+                                                EN ATTENTE
+                                            </span>
                                             @endif
                                             @if ($pret->statut == -1)
-                                            REJÉTÉ
+                                            <span class="shadow-none badge badge-danger">
+                                                REJÉTÉ
+                                            </span>
                                             @endif
                                             @if ($pret->statut == 1)
-                                            EN COURS
+                                            <span class="shadow-none badge badge-success">
+                                                EN COURS
+                                            </span>
                                             @endif
                                         @endforeach
                                     </td>
