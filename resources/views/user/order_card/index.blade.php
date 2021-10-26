@@ -40,25 +40,44 @@
                             <thead>
                             <th>Numero commande</th>
                             <th>Date commande</th>
-                            <th>Quantité</th>
                             <th>Compte associé</th>
-                            <th>Action</th>
+                            <th>Commande statut</th>
                             </thead>
                             @if ( count($client->commandes)>=1 )
                                 <tbody>
                                     @foreach ($client->commandes as $commande)
-                                    <tr>
-                                        <td>{{ $commande->no_commande }}</td>
-                                        <td>{{ $commande->created_at }}</td>
-                                        <td>{{ count($client->commandes) }}</td>
-                                        <td>{{ $commande->type_de_compte }}</td>
-                                        <td >
-                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" title="annuler" aria-expanded="true">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                                            </a>
-
-                                        </td>
-                                    </tr>
+                                        @if ($commande->statut == 3)
+                                            <tr>
+                                                <td class="text-center" colspan="4">
+                                                    <span class="shadow-none badge outline-badge-warning">
+                                                        Aucune commande en cours
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        @else
+                                            <tr>
+                                                <td>{{ $commande->no_commande }}</td>
+                                                <td>{{ $commande->created_at }}</td>
+                                                <td>{{ $commande->type_de_compte }}</td>
+                                                <td>
+                                                    @if ($commande->statut == 1)
+                                                    <span class="shadow-none badge badge-primary">
+                                                        EN ATTENTE
+                                                    </span>
+                                                    @endif
+                                                    @if ($commande->statut == 2)
+                                                    <span class="shadow-none badge badge-warning">
+                                                        LIVRAISON
+                                                    </span>
+                                                    @endif
+                                                    @if ($commande->statut == 3)
+                                                    <span class="shadow-none badge badge-success">
+                                                        DELIVRÉ
+                                                    </span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                 </tbody>
                             @endif

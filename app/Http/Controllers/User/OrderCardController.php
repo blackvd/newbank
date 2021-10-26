@@ -45,18 +45,10 @@ class OrderCardController extends Controller
 
     public function orderCard(Request $req)
     {
-        $client = Client::where('id', Auth::user()->client_id)->first();
 
-        $compte = $client->comptes()->where('type_compte', $req->account_type)->first();
         try {
-            DB::beginTransaction();
+            $client = Client::where('id', Auth::user()->client_id)->first();
             $NComde = substr((string)Carbon::now()->timestamp, 5) . "-NBK";
-            $numCarte = substr((string)Carbon::now()->timestamp, 0) . "009";
-            // dd($numCarte);
-            $req->validate([
-                "account_type" => "required",
-                "adresse_for_delivred" => "required"
-            ]);
 
             $commande = Commande::create([
                 "no_commande" => $NComde,
@@ -70,13 +62,6 @@ class OrderCardController extends Controller
                 "latitude" => 20.01,
                 "description" => $req->adresse_for_delivred,
                 "commande_id" => $commande->id,
-            ]);
-
-            $carte = Carte::create([
-                'type_carte' => 2,
-                'compte_id' => $compte->id,
-                "no_carte" => $numCarte,
-                'statut' => 1
             ]);
 
             DB::commit();
@@ -98,13 +83,14 @@ class OrderCardController extends Controller
             if ($carte->statut == 0) {
                 return ['error' => "Votre carte est deja desativer."];
             }
+            // suspendre la carte
+
             $carte->statut = 0;
             $carte->save();
 
             CardBlock::dispatch($client);
 
             DB::commit();
-
 
             return response()->json(['message' => "Votre carte vient d'etre bloquer, merci d'en commander une autre"]);
         } catch (\Throwable $th) {

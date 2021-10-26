@@ -15,6 +15,10 @@ class Carte extends Model
         "GIM-UEMOA" => 3,
         "MASTERCARD & GIM-UEMOA" => 4,
     ];
+    // statut carte soit 
+    // 0 = suspendu
+    // 1 = activer
+    //-1 = bloquer
 
     protected $fillable = ['type_carte', 'compte_id', "no_carte", 'statut'];
 

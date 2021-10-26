@@ -28,7 +28,7 @@
 
 <div class="row layout-spacing">
     <div class="col-lg-12 col-12">
-        @include('layouts.admin.partials.alert')
+        @include('layouts.user.partials.alert')
     </div>
 
     <!-- Content -->
@@ -38,28 +38,7 @@
                 <div class="d-flex justify-content-between">
                     <h3 class="">Informations</h3>
                     <div class="mt-2">
-                        @if($client->statut_ouverture_compte == \App\Models\Client::STATUT['EN ATTENTE'])
-                        <button class="btn btn-success" id="validateBtn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check-circle"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                        </button>
-
-                        <button class="btn btn-danger" id="rejectBtn">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x-circle"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                        </button>
-
-                        <form class="d-none" action="{{route('admin.account_requests.change_status', $client->track_id)}}" id="changeStatusForm" method="post">
-                            @csrf
-                            <input type="text" id="status" name="status">
-                        </form>
-                        @elseif($client->statut_ouverture_compte == \App\Models\Client::STATUT['VALIDATION'])
-                        <button class="btn btn-success" id="activateBtn">
-                            Activer le compte
-                        </button>
-
-                        <form class="d-none" action="{{route('admin.account_requests.activate_account', $client->track_id)}}" id="activateForm" method="post">
-                            @csrf
-                        </form>
-                        @elseif($client->statut_ouverture_compte == \App\Models\Client::STATUT['OUVERT'])
+                        @if($client->statut_ouverture_compte == \App\Models\Client::STATUT['OUVERT'])
                         <h6><span class="badge badge-success"> OUVERT </span></h6>
                         @else
                         <h6><span class="badge badge-danger"> REJÉTÉ </span></h6>
@@ -145,7 +124,8 @@
                                     <td>{{$compte->rib}}</td>
                                     <td>{{$compte->solde}}</td>
                                     <td>
-                                        @if($compte->type_compte == \App\Models\Compte::TYPE_COMPTE['EPARGNE'])
+                                        {{-- type_compte = 2 = epargne --}}
+                                        @if($compte->type_compte == 2)
                                         <span class="text-secondary">Compte épargne</span>
                                         @else
                                         <span class="text-primary">Compte courant</span>
@@ -162,26 +142,7 @@
 
         <div class="skills layout-spacing ">
             <div class="widget-content widget-content-area">
-                <div class="form-row mb-4">
-                    <div class="form-group col-md-6">
-                        <label for="genre">Genre</label>
-                        <input type="text" class="form-control" id="" value="{{$client->sexe}}" readonly>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="civilite">Civilite</label>
-                        <input type="text" class="form-control" id="" value="{{$client->civilite}}" readonly>
-                    </div>
-                </div>
-                <div class="form-row mb-4">
-                    <div class="form-group col-md-6">
-                        <label for="">Date de naissance</label>
-                        <input type="text" class="form-control" id="" value="{{$client->date_naissance}}" readonly>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <label for="">Lieu de naissance</label>
-                        <input type="text" class="form-control" id="" value="{{$client->lieu_naissance}}" readonly>
-                    </div>
-                </div>
+                
                 <div class="form-row mb-4">
                     <div class="form-group col-3">
                         <label for="">Nationnalité</label>
@@ -200,42 +161,51 @@
                         <input type="text" class="form-control" id="" value="{{$client->lieu_residence}}" readonly>
                     </div>
                 </div>
+
                 <div class="form-row mb-4">
                     <div class="form-group col-4">
-                        <label for="">Email</label>
-                        <input type="text" class="form-control" id="" value="{{$client->email}}" readonly>
+                        <label for="">Agence de livraison</label>
+                        <input type="text" class="form-control" id="" value="{{$commande->adresseLivraison->description}}" readonly>
                     </div>
+
                     <div class="form-group col-4">
-                        <label for="">Numéro de téléphone 1</label>
-                        <input type="text" class="form-control" id="" value="{{$client->numero_telephone1}}" readonly>
+                        <label for="">Numero commande</label>
+                        <input type="text" class="form-control" id="" value="{{$commande->no_commande}}" readonly>
                     </div>
+
                     <div class="form-group col-4">
-                        <label for="">Numéro de téléphone 2</label>
-                        <input type="text" class="form-control" id="" value="{{$client->numero_telephone2}}" readonly>
+                        <label for="">Date de la commande</label>
+                        <input type="text" class="form-control" id="" value="{{$commande->created_at}}" readonly>
                     </div>
                 </div>
-                <div class="form-row mb-4">
-                    <div class="form-group col-12">
-                        <label for="">Statut marital</label>
-                        <input type="text" class="form-control" id="" value="{{$client->statut_marital}}" readonly>
+
+                
+
+                <div class="form-row col-8">
+                    @if ($commande->statut == 1)
+                        <div class="form-group col-4">
+                            <form action="{{ route('cartes.livraison',['id'=>$commande->no_commande]) }}" method="post" >
+                                @csrf
+                                <button type="submit" id="pretEliBtn" class="btn btn-info">Livrer</button>
+                            </form>
+                        </div>                        
+                    @endif
+                    @if ($commande->statut == 2)
+                        <div class="form-group col-4">
+                            <form action="{{ route('cartes.delivrer',['id'=>$commande->no_commande]) }}" method="post">
+                                @csrf
+                                <input type="submit" class="btn btn-success" value="Delivrer">
+                            </form>
+                        </div>
+                    @endif
+                    <div class="form-group col-4">
+                        <form action="{{ route('cartes.block',['id'=>$commande->no_commande]) }}" method="get" >
+                            @csrf
+                            <input type="submit" class="btn btn-danger" value="Bloquer">
+                        </form>
                     </div>
                 </div>
-                <div class="form-row mb-4">
-                    <div class="form-group col-6">
-                        <label for="">Secteur d'activité</label>
-                        <input type="text" class="form-control" id="" value="{{$client->secteur_activite}}" readonly>
-                    </div>
-                    <div class="form-group col-6">
-                        <label for="">Profession</label>
-                        <input type="text" class="form-control" id="" value="{{$client->profession}}" readonly>
-                    </div>
-                </div>
-                <div class="form-row mb-4">
-                    <div class="form-group col-12">
-                        <label for="">Objet du compte</label>
-                        <input type="text" class="form-control" id="" value="{{$client->objet_compte}}" readonly>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -247,6 +217,7 @@
 <script src="{{asset('plugins/sweetalerts/custom-sweetalert.js')}}"></script>
 
 <script>
+
     $('#validateBtn').click(function(){
         swal({
             title: 'Êtes-vous sûr(e)',

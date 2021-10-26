@@ -15,6 +15,15 @@ class CreateTransactionsTable extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->string('ledger_code');
+            $table->string('branch_code');
+            $table->string('customer_num');
+            $table->string('client_id');
+            $table->string('benef_acct_num');
+            $table->string('amount');
+            $table->string('currency_code');
+            $table->integer('transaction_type');
+            $table->string('remark');
             $table->timestamps();
         });
     }

@@ -57,8 +57,8 @@
                                         </a>
                                         <input type="hidden" value="{{$carte->no_carte}}" id="carte_no">                                            
                                     @else
-                                        <p class="text-danger">
-                                            vous avez desactiver cette carte
+                                        <p class="text-danger shadow-none badge outline-badge-danger">
+                                            desactiver
                                         </p>
                                     @endif
                                     </td>

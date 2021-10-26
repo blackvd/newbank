@@ -31,17 +31,17 @@ class AccountRequestsController extends Controller
      */
     public function index()
     {
-        $account_requests = Client::all();
+        $clients = Client::all();
         return view('admin.account_requests.index', [
-            'account_requests' => $account_requests
+            'clients' => $clients
         ]);
     }
 
     public function show(string $trackId)
     {
-        $account = Client::where('track_id', $trackId)->first();
+        $client = Client::where('track_id', $trackId)->first();
 
-        return view("admin.account_requests.show", ["account" => $account]);
+        return view("admin.account_requests.show", ["client" => $client]);
     }
 
     public function changeStatus(string $trackId)

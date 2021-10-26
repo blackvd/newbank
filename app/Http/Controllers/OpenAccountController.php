@@ -10,15 +10,17 @@ use App\Events\ClientRegistered;
 
 class OpenAccountController extends Controller
 {
-    public function Index(){
+    public function index()
+    {
         return view('open_account');
     }
 
-    public function openAccount(){
+    public function openAccount()
+    {
         $client = new Client();
 
-        $client->track_id = "NBK-".Carbon::now()->timestamp;;
-        $client->choix_type_compte = implode(",",request()->accounts);
+        $client->track_id = "NBK-" . Carbon::now()->timestamp;;
+        $client->choix_type_compte = implode(",", request()->accounts);
         $client->statut_ouverture_compte = Client::STATUT['EN ATTENTE'];
         $client->sexe = request()->sexe;
         $client->civilite = request()->civilite;
@@ -49,39 +51,39 @@ class OpenAccountController extends Controller
         $identification->pays_emission_piece = request()->pays_emission_piece;
         $identification->client_id = $lastestClient->id;
         $photo = request()->photo;
-        $photoFileName = "PHOTO.".$photo->extension();
+        $photoFileName = "PHOTO." . $photo->extension();
         request()->photo->storeAs("clients/pieces/$client->track_id", $photoFileName, "public");
 
         $piece_recto = request()->piece_recto;
-        $pieceRectoFileName = "PIECE-R.".$piece_recto->extension();
+        $pieceRectoFileName = "PIECE-R." . $piece_recto->extension();
         request()->piece_recto->storeAs("clients/pieces/$client->track_id.", $pieceRectoFileName, "public");
 
         $piece_verso = request()->piece_verso;
-        $pieceVersoFileName = "PIECE-V.".$piece_verso->extension();
+        $pieceVersoFileName = "PIECE-V." . $piece_verso->extension();
         request()->piece_verso->storeAs("clients/pieces/$client->track_id", $pieceVersoFileName, "public");
 
         $facture_electricite = request()->facture_electricite;
-        if($facture_electricite){
-            $factureEleFileName = "FACTURE ELECTRICITE.".$facture_electricite->extension();
+        if ($facture_electricite) {
+            $factureEleFileName = "FACTURE ELECTRICITE." . $facture_electricite->extension();
             request()->facture_electricite->storeAs("clients/pieces/$client->track_id", $factureEleFileName, "public");
-        }else{
+        } else {
             $factureEleFileName = "";
         }
 
         $facture_eau = request()->facture_eau;
-        if($facture_eau){
-            $factureEauFileName = "FACTURE ELECTRICITE.".$facture_eau->extension();
+        if ($facture_eau) {
+            $factureEauFileName = "FACTURE ELECTRICITE." . $facture_eau->extension();
             request()->facture_eau->storeAs("clients/pieces/$client->track_id", $factureEauFileName, "public");
-        }else{
+        } else {
             $factureEauFileName = "";
         }
 
         $certificat_residence = request()->certificat_residence;
-        $certificatResidenceFileName = "CERTIFCAT RESIDENCE.".$certificat_residence->extension();
+        $certificatResidenceFileName = "CERTIFCAT RESIDENCE." . $certificat_residence->extension();
         request()->certificat_residence->storeAs("clients/pieces/$client->track_id", $certificatResidenceFileName, "public");
 
         $signature = request()->signature;
-        $signatureFileName = "SIGNATURE.".$signature->extension();
+        $signatureFileName = "SIGNATURE." . $signature->extension();
         request()->signature->storeAs("clients/pieces/$client->track_id", $signatureFileName, "public");
 
         $identification->photo = $photoFileName;
@@ -95,10 +97,11 @@ class OpenAccountController extends Controller
 
         ClientRegistered::dispatch($lastestClient);
 
-        return redirect('/open-account/success');
+        return redirect(route('open-account-success'));
     }
 
-    public function openAccountSuccess(){
+    public function openAccountSuccess()
+    {
         $client = Client::latest()->first();
         return view('open-account-success', ["client" => $client]);
     }
