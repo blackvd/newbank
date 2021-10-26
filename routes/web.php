@@ -12,7 +12,9 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminLoginController;
 use App\Http\Controllers\Admin\AccountRequestsController;
 use App\Http\Controllers\Admin\AccountManagmentController;
+use App\Http\Controllers\Admin\AgentController;
 use App\Http\Controllers\Admin\CardRequestController;
+use App\Http\Controllers\Admin\OperationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,14 +48,8 @@ Route::post('/block-card', [OrderCardController::class, 'bloquer'])->name('block
 Route::post('/pret', [PretController::class, 'askPret'])->name('pret.ask');
 
 
-
-
 Route::group(['prefix' => "admin"], function () {
-    Route::get('/login', [AdminLoginController::class, 'showAdminLogin'])->name('admin.login');
-    Route::post('/login', [AdminLoginController::class, 'adminLogin'])->name('admin.postLogin');
-    Route::post('/logout', [AdminLoginController::class, 'adminLogout'])->name('admin.postLogout');
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
     // Demande de pret 
     Route::get('/pret', [PretController::class, "index"])->name('pret.index');
@@ -72,14 +68,36 @@ Route::group(['prefix' => "admin"], function () {
     Route::post('/carte/delivrer/{id}', [CardRequestController::class, "delivrer"])->name('cartes.delivrer');
     Route::post('/carte/livraison/{id}', [CardRequestController::class, "livraison"])->name('cartes.livraison');
 
-
     // Fin demande carte admin 
 
+    // ajoutez des agents
+
+    Route::get('/agents', [AgentController::class, "index"])->name("agent.index");
+    Route::post('/useragent', [AgentController::class, "register"])->name('agent.add');
+    Route::get('/agents/{id}', [AgentController::class, 'showAgent'])->name("agent.show");
+
+    // fin ajout agent
+
+    // compte operations
     Route::get('/account_requests', [AccountRequestsController::class, 'index'])->name('admin.account_requests');
     Route::get('/account_requests/{trackId}', [AccountRequestsController::class, 'show'])->name('admin.account_requests.show');
     Route::post('/account_requests/{trackId}', [AccountRequestsController::class, 'changeStatus'])->name('admin.account_requests.change_status');
     Route::post('/account_requests/activate/{trackId}', [AccountRequestsController::class, 'activate'])->name('admin.account_requests.activate_account');
     Route::get('/account_requests/block/{trackId}', [AccountRequestsController::class, 'block'])->name('admin.account_requests.block_account');
-
     Route::get('/account_managments', [AccountManagmentController::class, 'index'])->name('admin.account_managements');
+    // fin compte operation
+
+    Route::get('/login', [AdminLoginController::class, 'showAdminLogin'])->name('admin.login');
+    Route::post('/login', [AdminLoginController::class, 'adminLogin'])->name('admin.postLogin');
+    Route::post('/logout', [AdminLoginController::class, 'adminLogout'])->name('admin.postLogout');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+
+    // creddit compte par agent depot 
+
+    Route::get('/credit', [OperationController::class, 'creditIndex'])->name('credit.index');
+
+
+
+    // fin agent 
 });

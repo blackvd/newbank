@@ -21,22 +21,25 @@ class AdminLoginController extends Controller
 
 
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('guest:admin')->except("adminLogout");
     }
 
 
-    public function showAdminLogin(){
+    public function showAdminLogin()
+    {
         return view('admin.auth.login');
     }
 
-    public function adminLogin(){
-        $this->validate(request(),[
+    public function adminLogin()
+    {
+        $this->validate(request(), [
             'username' => 'required',
             'password' => 'required|min:6'
         ]);
 
-        if($this->guard()->attempt(['username' => request()->username, 'password' => request()->password]))
+        if ($this->guard()->attempt(['username' => request()->username, 'password' => request()->password]))
             return redirect(route("admin.dashboard"));
 
         return back()->withInput(request()->only('username'))->with('error_msg', 'Nom d\'utilisateur ou mot de passe incorrect');
@@ -50,9 +53,10 @@ class AdminLoginController extends Controller
         return redirect(route('admin.login'));
     }
 
+
+
     protected function guard()
     {
         return Auth::guard("admin");
     }
-
 }

@@ -10,6 +10,7 @@ use App\Events\CardBlock;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CardRequestController extends Controller
 {
@@ -20,7 +21,8 @@ class CardRequestController extends Controller
      */
     public function __construct()
     {
-        $this->middleware("adminAuth");
+        $this->middleware("auth:admin");
+        // $this->middleware('guest:admin');
     }
 
     public function index()
@@ -123,7 +125,5 @@ class CardRequestController extends Controller
             throw $th;
             return redirect()->back()->with('echec', "Veuillez patienter avant de réprendre l'operation");
         }
-        dd("delivrer");
-        dd($id);
     }
 }

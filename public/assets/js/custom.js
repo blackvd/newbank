@@ -132,3 +132,82 @@ function GetIEVersion() {
     else
         return 0; //It is not IE
 }
+
+/*
+================================================
+|           add Agent Depot script             |
+================================================
+*/
+
+$("#btnFormAgent").on('click', () => {
+    $("#nom").val();
+    Swal.fire({
+        icon: "question",
+        title: "Ajout d'agent",
+        text: "Voulez vous ajouter ce agent ?",
+        showCancelButton: true,
+        confirmButtonColor: 'primary',
+        confirmButtonText: 'Enregistrez',
+        cancelButtonColor: '#bbb',
+        cancelButtonText: "Annuler",
+        preConfirm: () => {
+            axios.post("/admin/useragent", {
+                nameAgent: $("#name").val(),
+                username: $("#username").val(),
+                paswd: $("#pswd").val(),
+                paswd_confirmation: $("#confirmation").val(),
+                role: $("#role").val(),
+            }).then(response => {
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: response.data.message,
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        $("#name").val() = "";
+                        $("#username").val() = "";
+                        $("#pswd").val() = "";
+                        $("#confirmation").val = "";
+                        window.location.reload()
+                    }
+                })
+                window.location.reload
+            }).catch(error => {
+                let erreur = '';
+                datas = error.response.data.errors.paswd;
+                datas.forEach(element => {
+                    erreur += `<p class="help text-bold text-danger">` + element + `</p><br>`
+                });
+                Swal.fire({
+                    title: error.response.data.message,
+                    position: 'center',
+                    icon: 'error',
+                    html: erreur,
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        $("#name").val = "";
+                        $("#username").val = "";
+                        $("#pswd").val = "";
+                        $("#confirmation").val = "";
+                    }
+                })
+            })
+        }
+    }).then((result) => {
+        if (!result.isConfirmed) {
+            Swal.fire({
+                title: "Ajout d'agent",
+                text: "Action annulez",
+                icon: "info",
+            }).then(result => {
+                if (result.isConfirmed) {
+                    $("#name").val = "";
+                    $("#username").val = "";
+                    $("#pswd").val = "";
+                    $("#confirmation").val = "";
+                    window.location.reload()
+                }
+            })
+        }
+    })
+})
