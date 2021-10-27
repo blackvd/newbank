@@ -90,12 +90,12 @@
                                 <strong>Fonctionnalité indisponible ! </strong> vous n'avez qu'un seul compte
                             </div>
                         @else
-                            <form method="post" action="{{ route('trans_inter_compte') }}"  id="transForm" >
+                            <form method="POST" action="{{ route('trans_inter_compte') }}" id="transForm" >
                                 @csrf
                                 <div class="form-group row mb-4">
-                                    <label for="account_debit" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à débiter</label>
+                                    <label for="account_deb_trans_inter" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à débiter</label>
                                     <div class="col-xl-10 col-lg-9 col-sm-10">
-                                        <select name="account_debit" id="account_debit" class="form-control selectpicker">
+                                        <select name="account_deb_trans_inter" id="account_deb_trans_inter" class="form-control selectpicker" required>
                                             @foreach($client->comptes as $account)
                                                 <option value="{{$account->id}}">
                                                     {{$account->numero_compte}} - {{$account->type_compte == 1 ? "Courant":"Epargne"}} 
@@ -106,9 +106,9 @@
                                 </div>
 
                                 <div class="form-group row mb-4">
-                                    <label for="account_credit" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à créditer</label>
+                                    <label for="account_cred_trans_inter" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à créditer</label>
                                     <div class="col-xl-10 col-lg-9 col-sm-10">
-                                        <select name="account_credit" id="account_credit" class="form-control selectpicker">
+                                        <select name="account_cred_trans_inter" id="account_cred_trans_inter" class="form-control selectpicker" required>
                                             @foreach($client->comptes as $account)
                                                 <option value="{{$account->id}}">
                                                     {{$account->numero_compte}} - {{$account->type_compte == 1 ? "Courant":"Epargne"}} 
@@ -119,14 +119,13 @@
                                 </div>
 
                                 <div class="form-group row mb-4">
-                                    <label for="amount" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant(FCFA)</label>
+                                    <label for="amount_trans_inter" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant(FCFA)</label>
                                     <div class="col-xl-10 col-lg-9 col-sm-10">
-                                        <input type="number" class="form-control" id="amount" name="amount" placeholder="12000">
+                                        <input type="text" class="form-control" id="amount_trans_inter" name="amount_trans_inter" placeholder="12000">
                                     </div>
                                 </div>
-
                             </form>
-                            <div class="form-group row">
+                            <div class="row">
                                 <div class="col-sm-10">
                                     <button class="btn btn-primary mt-3" id="transInterBtn">Transferez</button>
                                 </div>
@@ -137,27 +136,27 @@
                         <form action="{{ route('trans_ext_compte') }}" method="post" id="transExtForm">
                             @csrf
                             <div class="form-group row mb-4">
-                                <label for="account_debit" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à débiter</label>
+                                <label for="account_deb_trans_extra" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à débiter</label>
                                 <div class="col-xl-10 col-lg-9 col-sm-10">
-                                    <select name="account_debit" id="account_debit" class="form-control selectpicker">
+                                    <select name="account_deb_trans_extra" id="account_deb_trans_extra" class="form-control selectpicker">
                                         @foreach($client->comptes as $account)
-                                            <option value="{{$account->id}}">{{$account->numero_compte}}</option>
+                                            <option value="{{$account->id}}">{{$account->numero_compte}} - {{$account->type_compte == 1 ? "Courant":"Epargne"}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
 
                             <div class="form-group row mb-4">
-                                <label for="account_credit" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à créditer</label>
+                                <label for="account_cred_trans_extra" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Numero compte à créditer ou Rib</label>
                                 <div class="col-xl-10 col-lg-9 col-sm-10">
-                                    <input type="text" class="form-control" name="account_credit" id="account_credit">
+                                    <input type="text" class="form-control" name="account_cred_trans_extra" id="account_credit">
                                 </div>
                             </div>
 
                             <div class="form-group row mb-4">
-                                <label for="amount" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant(FCFA)</label>
+                                <label for="amount_trans_extra" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant(FCFA)</label>
                                 <div class="col-xl-10 col-lg-9 col-sm-10">
-                                    <input type="number" class="form-control" name="amount" id="amount" placeholder="12000">
+                                    <input type="text" class="form-control" name="amount_trans_extra" id="amount_trans_extra" placeholder="12000">
                                 </div>
                             </div>
                         </form>
@@ -199,12 +198,32 @@
                         <button id="ribBtn" class="btn btn-primary mt-3">Soumettre</button>                            
                     </div>
                     <div class="tab-pane fade" id="bilan" role="tabpanel" aria-labelledby="bilan-tab">
-                        <form action="{{ route('demande_relever') }}" method="POST" class="form-inline justify-content-center">
+                        <form action="{{ route('demande_relever') }}" method="post" id="releverForm">
                             @csrf
-                            <label for="period" class="mr-2">Période</label>
-                            <input id="period" name="periode" class="form-control flatpickr flatpickr-input active mr-2" type="text" placeholder="Select Date..">
-                            <button type="submit" id="releverBtn" class="btn btn-primary">Soumettre</button>
+                            @if (count($client->comptes)<2)
+                                <input type="hidden" value="$client->comptes->id" name="compte_id">
+                            @else
+                                <div class="form-group row mb-4">
+                                    <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte</label>
+                                    <div class="col-xl-10 col-lg-9 col-sm-10">
+                                        <select name="compte" id="compte_id" class="selectpicker form-control">
+                                            @foreach ($client->comptes as $account)
+                                                <option value="{{$account->id}}">
+                                                    {{$account->numero_compte}} - {{$account->type_compte == 1 ? "Courant":"Epargne"}} 
+                                                </option>                                          
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="form-group row mb-4">
+                                <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Periode</label>
+                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                    <input type="text" id="period" class="form-control flatpickr-input active mr-2" placeholder="Select date ..">
+                                </div>
+                            </div>
                         </form>
+                        <button id="releverBtn" class="btn btn-primary mt-3">Soumettre</button>
                     </div>
                     <div class="tab-pane fade" id="loan" role="tabpanel" aria-labelledby="loan-tab">
                         <form action="{{ route('pret.ask') }}" method="Post" class="">
@@ -214,7 +233,7 @@
                                     <div class="form-group row mb-4">
                                         <label for="amount" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant du prêt</label>
                                         <div class="col-xl-10 col-lg-9 col-sm-10">
-                                            <input id="amount" type="text" value="" name="amount" required pattern="[0-9]{6,}">
+                                            <input id="amount" type="text" value="" name="amount_pret" required pattern="[0-9]{6,}">
                                         </div>
                                     </div>
                                 </div>
@@ -261,15 +280,29 @@
     <script src="{{ asset('assets/js/operation.js') }}"></script>
     <script>
         $("#account_credit").inputmask({mask:"CI221019999999999"});
+
         var period = flatpickr($("#period"), {
         mode: 'range',
         })
 
-        $("input[name='amount']").TouchSpin({
+        $("input[name='amount_pret']").TouchSpin({
             verticalbuttons: true,
             min:200000,
-            max:4999999,
+            max:5000000,
             step:10000,
+            buttondown_class: "btn btn-classic btn-outline-info",
+            buttonup_class: "btn btn-classic btn-outline-danger"
+        });
+        $("input[name='amount_trans_inter']").TouchSpin({
+            verticalbuttons: true,
+            max:10000000000,
+            buttondown_class: "btn btn-classic btn-outline-info",
+            buttonup_class: "btn btn-classic btn-outline-danger"
+        });
+
+        $("input[name='amount_trans_extra']").TouchSpin({
+            verticalbuttons: true,
+            max:10000000000,
             buttondown_class: "btn btn-classic btn-outline-info",
             buttonup_class: "btn btn-classic btn-outline-danger"
         });

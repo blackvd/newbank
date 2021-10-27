@@ -163,10 +163,10 @@ $("#btnFormAgent").on('click', () => {
                     title: response.data.message,
                 }).then(result => {
                     if (result.isConfirmed) {
-                        $("#name").val() = "";
-                        $("#username").val() = "";
-                        $("#pswd").val() = "";
-                        $("#confirmation").val = "";
+                        $("#name").val("");
+                        $("#username").val("");
+                        $("#pswd").val("");
+                        $("#confirmation").val("");
                         window.location.reload()
                     }
                 })
@@ -184,10 +184,10 @@ $("#btnFormAgent").on('click', () => {
                     html: erreur,
                 }).then(result => {
                     if (result.isConfirmed) {
-                        $("#name").val = "";
-                        $("#username").val = "";
-                        $("#pswd").val = "";
-                        $("#confirmation").val = "";
+                        $("#name").val("");
+                        $("#username").val("");
+                        $("#pswd").val("");
+                        $("#confirmation").val("");
                     }
                 })
             })
@@ -200,10 +200,10 @@ $("#btnFormAgent").on('click', () => {
                 icon: "info",
             }).then(result => {
                 if (result.isConfirmed) {
-                    $("#name").val = "";
-                    $("#username").val = "";
-                    $("#pswd").val = "";
-                    $("#confirmation").val = "";
+                    $("#name").val("");
+                    $("#username").val("");
+                    $("#pswd").val("");
+                    $("#confirmation").val("");
                     window.location.reload()
                 }
             })

@@ -42,3 +42,18 @@ $('#ribBtn').on('click', (e) => {
         }
     });
 })
+
+$('#releverBtn').on('click', (e) => {
+    Swal.fire({
+        title: "Information",
+        text: "Confirmez votre choix s'il vous plait",
+        icon: "info",
+        showCancelButton: true,
+        confirmButtonText: 'Confirmez',
+    }).then((result) => {
+        console.log(result);
+        if (result.isConfirmed) {
+            $("#releverForm").submit();
+        }
+    });
+})
