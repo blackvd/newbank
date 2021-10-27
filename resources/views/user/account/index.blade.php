@@ -59,9 +59,7 @@
                             <a class="dropdown-item"  id="loan-tab" data-toggle="tab" href="#loan" role="tab" aria-controls="loan" aria-selected="false">Prêt</a>
                         </div>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li> --}}
+                    
                 </ul>
                 <div class="tab-content" id="simpletabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -72,8 +70,6 @@
                                         <th>Numéro de compte</th>
                                         <th>Type de compte</th>
                                         <th>Solde</th>
-                                        <th class="text-center">Statut</th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -82,8 +78,6 @@
                                         <td>{{$account->numero_compte}}</td>
                                         <td>{{$account->type_compte == 1 ? "Courant" : "Épargne"}}</td>
                                         <td>{{$account->solde}}</td>
-                                        <td></td>
-                                        <td></td>
                                     </tr>
                                 @endforeach
                                 </tbody>

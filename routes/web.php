@@ -53,16 +53,14 @@ Route::post('/pret', [PretController::class, 'askPret'])->name('pret.ask');
 Route::post('/transaction/inte', [TransactionController::class, "storeInt"])->name('trans_inter_compte');
 Route::post('/transaction/ext', [TransactionController::class, "storeExt"])->name('trans_ext_compte');
 
-<<<<<<< HEAD
 // Demande du rib
 
 Route::post('/demande/rib', [DemandeController::class, "rib"])->name('demande_rib');
 
+// demande reveler
 Route::post('/demande/relever', [DemandeController::class, "relever"])->name('demande_relever');
 
 
-=======
->>>>>>> role
 Route::group(['prefix' => "admin"], function () {
 
 
@@ -111,8 +109,8 @@ Route::group(['prefix' => "admin"], function () {
     // creddit compte par agent depot 
 
     Route::get('/credit', [OperationController::class, 'creditIndex'])->name('credit.index');
-
-
+    Route::get('/credit/crediter/{track_id}', [OperationController::class, 'showCrediteur'])->name('credit.show');
+    Route::post('/credit/crediter', [OperationController::class, "addCredit"])->name('credit.crediter');
 
     // fin agent 
 });

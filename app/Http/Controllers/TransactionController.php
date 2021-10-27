@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Compte;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,21 @@ class TransactionController extends Controller
      */
     public function storeInt(Request $request)
     {
+        $valide = $request->validate([
+            'account_credit' => 'required|distinct',
+            'account_debit' => 'required|distinct',
+            "amount" => "required"
+        ]);
+        dd($valide);
+
+        if ($request->account_credit == $request->account_debit) {
+
+            return redirect()->back()->with('echec', "Veuillez prendre un compte different");
+        }
         dd($request);
+        $compte_credit = Compte::where('id', $request->account_credit)->first();
+        $compte_debit = Compte::where('id', $request->account_debit)->first();
+        dd($compte_credit);
         return ['message' => "En tout cas je suis la "];
     }
 

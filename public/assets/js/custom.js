@@ -140,7 +140,6 @@ function GetIEVersion() {
 */
 
 $("#btnFormAgent").on('click', () => {
-    $("#nom").val();
     Swal.fire({
         icon: "question",
         title: "Ajout d'agent",
