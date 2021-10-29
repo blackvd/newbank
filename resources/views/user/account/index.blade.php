@@ -219,7 +219,17 @@
                             <div class="form-group row mb-4">
                                 <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Periode</label>
                                 <div class="col-xl-10 col-lg-9 col-sm-10">
-                                    <input type="text" id="period" class="form-control flatpickr-input active mr-2" placeholder="Select date ..">
+                                    <input type="text" id="period" name="period" class="form-control flatpickr-input active mr-2" placeholder="Select date ..">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-4">
+                                <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Options</label>
+                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                    <select id="options" name="options" class="selectpicker form-control">
+                                        <option value="download">Télécharger</option>
+                                        <option value="mail">Recevoir par mail</option>
+                                        <option value="two">Télécharger & recevoir par mail</option>
+                                    </select>
                                 </div>
                             </div>
                         </form>

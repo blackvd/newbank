@@ -33,6 +33,6 @@ class Admin extends Authenticatable
     }
     public function transactions()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Transaction::class, 'agent');
     }
 }

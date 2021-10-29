@@ -29,6 +29,6 @@ class Compte extends Model
 
     public function transaction()
     {
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Transaction::class, 'compte');
     }
 }
