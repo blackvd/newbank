@@ -25,13 +25,8 @@ class AccountController extends Controller
 
     public function index()
     {
-        $pdf = App::make('dompdf.wrapper');
 
         $client = Client::where("id", Auth::user()->client_id)->first();
-        $trans = Transaction::all();
-        $compte = $trans[0]->compte()->first();
-
-        // return view('emails.relever', compact('trans', "compte"));
 
         return view('user.account.index', compact('client'));
     }

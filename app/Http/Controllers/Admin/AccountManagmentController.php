@@ -22,7 +22,7 @@ class AccountManagmentController extends Controller
 
     public function index()
     {
-        $clients = Client::all()->sortByDesc("created_at");
+        $clients = Client::where('statut_ouverture_compte', 3)->get();
         return view("admin.account_managments.index", compact('clients'));
     }
 }
