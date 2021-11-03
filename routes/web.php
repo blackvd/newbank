@@ -88,6 +88,8 @@ Route::group(['prefix' => "admin"], function () {
     Route::get('/agents', [AgentController::class, "index"])->name("agent.index");
     Route::post('/useragent', [AgentController::class, "register"])->name('agent.add');
     Route::get('/agents/{id}', [AgentController::class, 'showAgent'])->name("agent.show");
+    Route::post('/agents', [AgentController::class, 'editAgent'])->name("agent.edit");
+    Route::post('/agents/del', [AgentController::class, 'deleteAgent'])->name("agent.delete");
 
     // fin ajout agent
 

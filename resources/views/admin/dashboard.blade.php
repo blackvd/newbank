@@ -5,8 +5,6 @@
 @section('styles')
 <link href="{{asset('assets/css/dashboard/dash_1.css')}}" rel="stylesheet" type="text/css" />
 <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico"/>
-<link href="assets/css/loader.css" rel="stylesheet" type="text/css" />
-<script src="assets/js/loader.js"></script>
 
 <link href="https://fonts.googleapis.com/css?family=Quicksand:400,500,600,700&amp;display=swap" rel="stylesheet">
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
