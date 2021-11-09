@@ -36,6 +36,6 @@ class RequestRejectMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.request_reject');
+        return $this->view('emails.request_reject')->subject('Reject');
     }
 }

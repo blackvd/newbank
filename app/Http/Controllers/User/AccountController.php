@@ -4,7 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\Models\Client;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\PDF;
+use Illuminate\Support\Facades\App;
 use App\Http\Controllers\Controller;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Auth;
 
 class AccountController extends Controller
@@ -22,7 +25,14 @@ class AccountController extends Controller
 
     public function index()
     {
+        $pdf = App::make('dompdf.wrapper');
+
         $client = Client::where("id", Auth::user()->client_id)->first();
-        return view('user.account.index', ['client' => $client]);
+        $trans = Transaction::all();
+        $compte = $trans[0]->compte()->first();
+
+        // return view('emails.relever', compact('trans', "compte"));
+
+        return view('user.account.index', compact('client'));
     }
 }

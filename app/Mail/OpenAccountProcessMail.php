@@ -37,6 +37,6 @@ class OpenAccountProcessMail extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.open_account');
+        return $this->view('emails.open_account')->subject('Compte en cours de creation');
     }
 }

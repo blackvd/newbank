@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use App\Models\Admin;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -99,5 +101,45 @@ class AgentController extends Controller
     protected function guard()
     {
         return Auth::guard('admin');
+    }
+
+    public function showAgent($id)
+    {
+        $agent = Admin::findOrFail($id);
+        $trans = Transaction::where('agent', $id)->get();
+        return view('admin.agent.show', compact('trans', 'agent'));
+    }
+
+    public function editAgent(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $agent = Admin::findOrFail($request->id);
+            $agent->username = $request->username;
+            $agent->name = $request->name;
+            $agent->save();
+
+            DB::commit();
+            return redirect()->back()->with('success', "Informations modifiées");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('echec', "Modification echoué");
+        }
+    }
+
+
+    public function deleteAgent(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $agent = Admin::findOrFail($request->id);
+            $agent->delete();
+            // $agent->save();
+            // DB::commit();
+            return redirect()->back()->with('success', "Agent depot supprimé");
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return redirect()->back()->with('echec', "Suppression echouée");
+        }
     }
 }

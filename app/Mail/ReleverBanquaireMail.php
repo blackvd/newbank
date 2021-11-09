@@ -2,21 +2,20 @@
 
 namespace App\Mail;
 
+use App\Models\Client;
+use App\Models\Compte;
+use App\Models\Transaction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Compte;
 
-class AccountOpenMail extends Mailable
+class ReleverBanquaireMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * The account instance
-     * 
-     * @var \App\Models\Compte
-     */
+    public $trans;
     public $compte;
 
     /**
@@ -24,9 +23,10 @@ class AccountOpenMail extends Mailable
      *
      * @return void
      */
-    public function __construct(Compte $compte)
+    public function __construct(Compte $compte, $trans)
     {
         $this->compte = $compte;
+        $this->trans = $trans;
     }
 
     /**
@@ -36,6 +36,6 @@ class AccountOpenMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.open_account')->subject("Ouverture de compte");
+        return $this->view('emails.releverMail')->subject("Demande de relever de compte NewBank");
     }
 }

@@ -34,8 +34,8 @@
                     <table id="datatable" class="table style-1 dt-table-hover non-hover">
                         <thead>
                         <tr>
-                            <th >Nom complet</th>
-                            <th >Numéro de compte</th>
+                            <th>Nom complet</th>
+                            <th>Numéro de compte</th>
                             <th>Type de compte</th>
                             <th>Solde(Francs cfa)</th>
                             <th>Statut</th>
@@ -44,71 +44,50 @@
                         </thead>
                         <tbody>
                             @foreach ($clients as $item)
-                            <tr>
-                                <td>
-                                    {{ $item->civilite ?? ""}}
-                                    {{ $item->nom ?? ""}}
-                                    {{ $item->prenoms ?? ""}}
-                                </td>
-                                <td >
-                                    @foreach ($item->comptes as $compte)
-                                        {{ $compte->numero_compte}}<br/>
-                                    @endforeach
-                                </td>
-                                <td>
-                                    @foreach ($item->comptes as $compte)
-                                        {{ $compte->type_compte ==1 ?"Courant":"Epargne" }}<br/>
-                                    @endforeach
-                                </td>
-                                <td>
-                                    @foreach ($item->comptes as $compte)
-                                        {{ $compte->solde ?? "0" }}<br/>
-                                    @endforeach
-                                </td>
-                                <td>
-                                    @if ($item->statut_ouverture_compte == 1)
-                                    <span class="shadow-none badge badge-warning">
-                                        EN ATTENTE
-                                    </span>
-                                    @endif
-                                    @if ($item->statut_ouverture_compte == 2)
-                                    <span class="shadow-none badge badge-secondary">
-                                        VALIDATION
-                                    </span>
-                                    @endif
-                                    @if ($item->statut_ouverture_compte == 3)
-                                    <span class="shadow-none badge badge-success">
-                                        OUVERT
-                                    </span>
-                                    @endif
-                                    @if ($item->statut_ouverture_compte == 0)
-                                    <span class="shadow-none badge badge-dark">
-                                        DESACTIVÉ
-                                    </span>
-                                    @endif
-                                    @if ($item->statut_ouverture_compte == -1)
-                                    <span class="shadow-none badge badge-danger">
-                                        REJÉTÉ
-                                    </span>
-                                    @endif
-                                    @if ($item->statut_ouverture_compte == -2)
-                                    BLOQUER
-                                    @endif
-                                </td>
-                                <td class="text-center">
-                                    <div class="dropdown">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                        </a>
-    
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
-                                            <a class="dropdown-item" href="{{route('admin.account_requests.show', $item->track_id)}}">Détails</a>
-                                            <a class="dropdown-item" href="{{route('admin.account_requests.block_account', $item->track_id)}}">Bloquer</a>
+                                @if ($item->statut_ouverture_compte == 3)
+                                <tr>
+                                    <td>
+                                        {{ $item->civilite ?? ""}}
+                                        {{ $item->nom ?? ""}}
+                                        {{ $item->prenoms ?? ""}}
+                                    </td>
+                                    <td >
+                                        @foreach ($item->comptes as $compte)
+                                            {{ $compte->numero_compte}}<br/>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach ($item->comptes as $compte)
+                                            {{ $compte->type_compte ==1 ?"Courant":"Epargne" }}<br/>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @foreach ($item->comptes as $compte)
+                                            {{ $compte->solde ?? "0" }}<br/>
+                                        @endforeach
+                                    </td>
+                                    <td>
+                                        @if ($item->statut_ouverture_compte == 3)
+                                        <span class="shadow-none badge badge-success">
+                                            OUVERT
+                                        </span>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="dropdown">
+                                            <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
+                                            </a>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                                                <a href="{{route('credit.show', $item->track_id)}}" id="crediter" class="dropdown-item">
+                                                    Crediter
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-
-                            </tr>
+                                    </td>
+    
+                                </tr>
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

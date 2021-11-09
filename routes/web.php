@@ -6,7 +6,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\PretController;
 use App\Http\Controllers\OpenAccountController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\User\AccountController;
+use App\Http\Controllers\User\DemandeController;
 use App\Http\Controllers\User\OrderCardController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminLoginController;
@@ -47,6 +49,17 @@ Route::post('/block-card', [OrderCardController::class, 'bloquer'])->name('block
 
 Route::post('/pret', [PretController::class, 'askPret'])->name('pret.ask');
 
+// transactions des compte
+Route::post('/transaction/inte', [TransactionController::class, "storeInt"])->name('trans_inter_compte');
+Route::post('/transaction/ext', [TransactionController::class, "storeExt"])->name('trans_ext_compte');
+
+// Demande du rib
+
+Route::post('/demande/rib', [DemandeController::class, "rib"])->name('demande_rib');
+
+// demande reveler
+Route::post('/demande/relever', [DemandeController::class, "relever"])->name('demande_relever');
+
 
 Route::group(['prefix' => "admin"], function () {
 
@@ -75,6 +88,8 @@ Route::group(['prefix' => "admin"], function () {
     Route::get('/agents', [AgentController::class, "index"])->name("agent.index");
     Route::post('/useragent', [AgentController::class, "register"])->name('agent.add');
     Route::get('/agents/{id}', [AgentController::class, 'showAgent'])->name("agent.show");
+    Route::post('/agents', [AgentController::class, 'editAgent'])->name("agent.edit");
+    Route::post('/agents/del', [AgentController::class, 'deleteAgent'])->name("agent.delete");
 
     // fin ajout agent
 
@@ -96,8 +111,8 @@ Route::group(['prefix' => "admin"], function () {
     // creddit compte par agent depot 
 
     Route::get('/credit', [OperationController::class, 'creditIndex'])->name('credit.index');
-
-
+    Route::get('/credit/crediter/{track_id}', [OperationController::class, 'showCrediteur'])->name('credit.show');
+    Route::post('/credit/crediter', [OperationController::class, "addCredit"])->name('credit.crediter');
 
     // fin agent 
 });

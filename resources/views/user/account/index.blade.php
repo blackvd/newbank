@@ -59,174 +59,220 @@
                             <a class="dropdown-item"  id="loan-tab" data-toggle="tab" href="#loan" role="tab" aria-controls="loan" aria-selected="false">Prêt</a>
                         </div>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-                    </li> --}}
+                    
                 </ul>
-                        <div class="tab-content" id="simpletabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered mb-4">
-                                        <thead>
-                                            <tr>
-                                                <th>Numéro de compte</th>
-                                                <th>Type de compte</th>
-                                                <th>Solde</th>
-                                                <th class="text-center">Statut</th>
-                                                <th></th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        @foreach($client->comptes as $account)
-                                            <tr>
-                                                <td>{{$account->numero_compte}}</td>
-                                                <td>{{$account->type_compte == 1 ? "Courant" : "Épargne"}}</td>
-                                                <td>{{$account->solde}}</td>
-                                                <td></td>
-                                                <td></td>
-                                            </tr>
-                                        @endforeach
-                                        </tbody>
-                                    </table>
+                <div class="tab-content" id="simpletabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <div class="table-responsive">
+                            <table class="table table-bordered mb-4">
+                                <thead>
+                                    <tr>
+                                        <th>Numéro de compte</th>
+                                        <th>Type de compte</th>
+                                        <th>Solde</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                @foreach($client->comptes as $account)
+                                    <tr>
+                                        <td>{{$account->numero_compte}}</td>
+                                        <td>{{$account->type_compte == 1 ? "Courant" : "Épargne"}}</td>
+                                        <td>{{$account->solde}}</td>
+                                    </tr>
+                                @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        @if(count($client->comptes) < 2)
+                            <div class="alert alert-light-danger border-0 mb-4" role="alert">
+                                <strong>Fonctionnalité indisponible ! </strong> vous n'avez qu'un seul compte
+                            </div>
+                        @else
+                            <form method="POST" action="{{ route('trans_inter_compte') }}" id="transForm" >
+                                @csrf
+                                <div class="form-group row mb-4">
+                                    <label for="account_deb_trans_inter" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à débiter</label>
+                                    <div class="col-xl-10 col-lg-9 col-sm-10">
+                                        <select name="account_deb_trans_inter" id="account_deb_trans_inter" class="form-control selectpicker" required>
+                                            @foreach($client->comptes as $account)
+                                                <option value="{{$account->id}}">
+                                                    {{$account->numero_compte}} - {{$account->type_compte == 1 ? "Courant":"Epargne"}} 
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-4">
+                                    <label for="account_cred_trans_inter" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à créditer</label>
+                                    <div class="col-xl-10 col-lg-9 col-sm-10">
+                                        <select name="account_cred_trans_inter" id="account_cred_trans_inter" class="form-control selectpicker" required>
+                                            @foreach($client->comptes as $account)
+                                                <option value="{{$account->id}}">
+                                                    {{$account->numero_compte}} - {{$account->type_compte == 1 ? "Courant":"Epargne"}} 
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row mb-4">
+                                    <label for="amount_trans_inter" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant(FCFA)</label>
+                                    <div class="col-xl-10 col-lg-9 col-sm-10">
+                                        <input type="text" class="form-control" id="amount_trans_inter" name="amount_trans_inter" placeholder="12000">
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="row">
+                                <div class="col-sm-10">
+                                    <button class="btn btn-primary mt-3" id="transInterBtn">Transferez</button>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                @if(count($client->comptes) <= 1)
-                                    <div class="alert alert-light-danger border-0 mb-4" role="alert">
-                                        <strong>Fonctionnalité indisponible ! </strong> vous n'avez qu'un seul compte
-                                    </div>
-                                @else
-                                    <form action="">
-                                        <div class="form-group row mb-4">
-                                            <label for="account_debit" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à débiter</label>
-                                            <div class="col-xl-10 col-lg-9 col-sm-10">
-                                                <select name="account_debit" id="account_debit" class="form-control selectpicker">
-                                                    @foreach($client->comptes as $account)
-                                                        <option value="{{$account->id}}">{{$account->numero_compte}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row mb-4">
-                                            <label for="account_credit" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à créditer</label>
-                                            <div class="col-xl-10 col-lg-9 col-sm-10">
-                                                <select name="account_credit" id="account_credit" class="form-control selectpicker">
-
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row mb-4">
-                                            <label for="amount" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant(FCFA)</label>
-                                            <div class="col-xl-10 col-lg-9 col-sm-10">
-                                                <input type="number" class="form-control" id="amount" placeholder="12000">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <div class="col-sm-10">
-                                                <button type="submit" class="btn btn-primary mt-3">Valider</button>
-                                            </div>
-                                        </div>
-                                    </form>
-                                @endif
+                        @endif
+                    </div>
+                    <div class="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
+                        <form action="{{ route('trans_ext_compte') }}" method="post" id="transExtForm">
+                            @csrf
+                            <div class="form-group row mb-4">
+                                <label for="account_deb_trans_extra" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à débiter</label>
+                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                    <select name="account_deb_trans_extra" id="account_deb_trans_extra" class="form-control selectpicker">
+                                        @foreach($client->comptes as $account)
+                                            <option value="{{$account->id}}">{{$account->numero_compte}} - {{$account->type_compte == 1 ? "Courant":"Epargne"}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
-                            <div class="tab-pane fade" id="profile2" role="tabpanel" aria-labelledby="profile-tab2">
-                                <form action="">
-                                    <div class="form-group row mb-4">
-                                        <label for="account_debit" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à débiter</label>
-                                        <div class="col-xl-10 col-lg-9 col-sm-10">
-                                            <select name="account_debit" id="account_debit" class="form-control selectpicker">
-                                                @foreach($client->comptes as $account)
-                                                    <option value="{{$account->id}}">{{$account->numero_compte}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
 
-                                    <div class="form-group row mb-4">
-                                        <label for="account_credit" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte à créditer</label>
-                                        <div class="col-xl-10 col-lg-9 col-sm-10">
-                                            <input type="text" class="form-control" name="account_credit" id="account_credit">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-4">
-                                        <label for="amount" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant(FCFA)</label>
-                                        <div class="col-xl-10 col-lg-9 col-sm-10">
-                                            <input type="number" class="form-control" id="amount" placeholder="12000">
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row">
-                                        <div class="col-sm-10">
-                                            <button type="submit" class="btn btn-primary mt-3">Valider</button>
-                                        </div>
-                                    </div>
-                                </form>
+                            <div class="form-group row mb-4">
+                                <label for="account_cred_trans_extra" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Numero compte à créditer ou Rib</label>
+                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                    <input type="text" class="form-control" name="account_cred_trans_extra" id="account_credit">
+                                </div>
                             </div>
-                            <div class="tab-pane fade" id="rib" role="tabpanel" aria-labelledby="rib-tab">
-                                <form action="">
-                                    <div class="form-group row mb-4">
-                                        <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Options</label>
-                                        <div class="col-xl-10 col-lg-9 col-sm-10">
-                                            <select id="options" name="options" class="selectpicker form-control">
-                                                <option>Télécharger</option>
-                                                <option>Recevoir par mail</option>
-                                                <option>Télécharger & recevoir par mail</option>
-                                            </select>
-                                        </div>
-                                    </div>
 
-                                    <button type="submit" class="btn btn-primary mt-3">Soumettre</button>
-                                </form>
+                            <div class="form-group row mb-4">
+                                <label for="amount_trans_extra" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant(FCFA)</label>
+                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                    <input type="text" class="form-control" name="amount_trans_extra" id="amount_trans_extra" placeholder="12000">
+                                </div>
                             </div>
-                            <div class="tab-pane fade" id="bilan" role="tabpanel" aria-labelledby="bilan-tab">
-                                <form action="" class="form-inline justify-content-center">
-                                    <label for="period" class="mr-2">Période</label>
-                                    <input id="period" class="form-control flatpickr flatpickr-input active mr-2" type="text" placeholder="Select Date..">
-                                    <button type="submit" class="btn btn-primary">Valider</button>
-                                </form>
-                            </div>
-                            <div class="tab-pane fade" id="loan" role="tabpanel" aria-labelledby="loan-tab">
-                                <form action="{{ route('pret.ask') }}" method="Post" class="">
-                                    @csrf
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <div class="form-group row mb-4">
-                                                <label for="amount" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant du prêt</label>
-                                                <div class="col-xl-10 col-lg-9 col-sm-10">
-                                                    <input id="amount" type="text" value="" name="amount" required pattern="[0-9]{6,}">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <div class="form-group row mb-4">
-                                                <label for="agence" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Agence</label>
-                                                <div class="col-xl-10 col-lg-9 col-sm-10">
-                                                    <select id="agence" name="agence" class="selectpicker form-control" required>
-                                                        <option value="abobo">Abobo</option>
-                                                        <option value="yopougon">Yopougon</option>
-                                                        <option value="angre">Angré</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group row mb-4">
-                                        <label for="reason" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Motif de la demande</label>
-                                        <div class="col-xl-10 col-lg-9 col-sm-10">
-                                            <textarea class="form-control" id="reason" name="reason" rows="3" ></textarea>
-                                        </div>
-                                    </div>
-                                    <input type="hidden" name="user" value="{{$client->id}}">
-                                    <button type="submit" class="btn btn-primary">Soumettre</button>
-                                </form>
+                        </form>
+                        <div class="form-group row">
+                            <div class="col-sm-10">
+                                <button id="transExtBtn" class="btn btn-primary mt-3">Valider</button>
                             </div>
                         </div>
+                    </div>
+                    <div class="tab-pane fade" id="rib" role="tabpanel" aria-labelledby="rib-tab">
+                        <form action="{{ route('demande_rib') }}" method="post" id="ribForm">
+                            @csrf
+                            <div class="form-group row mb-4">
+                                <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Options</label>
+                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                    <select id="options" name="options" class="selectpicker form-control">
+                                        <option value="download">Télécharger</option>
+                                        <option value="mail">Recevoir par mail</option>
+                                        <option value="two">Télécharger & recevoir par mail</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-4">
+                                <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte</label>
+                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                    <select name="compte" id="compte_id" class="selectpicker form-control">
+                                        @foreach ($client->comptes as $account)
+                                            <option value="{{$account->id}}">
+                                                {{$account->numero_compte}} - {{$account->type_compte == 1 ? "Courant":"Epargne"}} 
+                                            </option>                                          
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                            </div>
+
+                        </form>
+                        <button id="ribBtn" class="btn btn-primary mt-3">Soumettre</button>                            
+                    </div>
+                    <div class="tab-pane fade" id="bilan" role="tabpanel" aria-labelledby="bilan-tab">
+                        <form action="{{ route('demande_relever') }}" method="post" id="releverForm">
+                            @csrf
+                            @if (count($client->comptes)<2)
+                                <input type="hidden" value="$client->comptes->id" name="compte_id">
+                            @else
+                                <div class="form-group row mb-4">
+                                    <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Compte</label>
+                                    <div class="col-xl-10 col-lg-9 col-sm-10">
+                                        <select name="compte" id="compte_id" class="selectpicker form-control">
+                                            @foreach ($client->comptes as $account)
+                                                <option value="{{$account->id}}">
+                                                    {{$account->numero_compte}} - {{$account->type_compte == 1 ? "Courant":"Epargne"}} 
+                                                </option>                                          
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            @endif
+                            <div class="form-group row mb-4">
+                                <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Periode</label>
+                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                    <input type="text" id="period" name="period" class="form-control flatpickr-input active mr-2" placeholder="Select date ..">
+                                </div>
+                            </div>
+                            <div class="form-group row mb-4">
+                                <label for="options" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Options</label>
+                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                    <select id="options" name="options" class="selectpicker form-control">
+                                        <option value="download">Télécharger</option>
+                                        <option value="mail">Recevoir par mail</option>
+                                        <option value="two">Télécharger & recevoir par mail</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+                        <button id="releverBtn" class="btn btn-primary mt-3">Soumettre</button>
+                    </div>
+                    <div class="tab-pane fade" id="loan" role="tabpanel" aria-labelledby="loan-tab">
+                        <form action="{{ route('pret.ask') }}" method="Post" class="">
+                            @csrf
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="form-group row mb-4">
+                                        <label for="amount" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Montant du prêt</label>
+                                        <div class="col-xl-10 col-lg-9 col-sm-10">
+                                            <input id="amount" type="text" value="" name="amount_pret" required pattern="[0-9]{6,}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="form-group row mb-4">
+                                        <label for="agence" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Agence</label>
+                                        <div class="col-xl-10 col-lg-9 col-sm-10">
+                                            <select id="agence" name="agence" class="selectpicker form-control" required>
+                                                <option value="abobo">Abobo</option>
+                                                <option value="yopougon">Yopougon</option>
+                                                <option value="angre">Angré</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row mb-4">
+                                <label for="reason" class="col-xl-2 col-sm-3 col-sm-2 col-form-label">Motif de la demande</label>
+                                <div class="col-xl-10 col-lg-9 col-sm-10">
+                                    <textarea class="form-control" id="reason" name="reason" rows="3" ></textarea>
+                                </div>
+                            </div>
+                            <input type="hidden" name="user" value="{{$client->id}}">
+                            <button type="submit" class="btn btn-primary">Soumettre</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -239,17 +285,34 @@
     <script src="{{asset('plugins/input-mask/input-mask.js')}}"></script>
     <script src="{{asset('plugins/flatpickr/flatpickr.js')}}"></script>
     <script src="{{asset('plugins/bootstrap-touchspin/jquery.bootstrap-touchspin.min.js')}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.1.7/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.22.0/dist/axios.min.js"></script>
+    <script src="{{ asset('assets/js/operation.js') }}"></script>
     <script>
         $("#account_credit").inputmask({mask:"CI221019999999999"});
+
         var period = flatpickr($("#period"), {
         mode: 'range',
         })
 
-        $("input[name='amount']").TouchSpin({
+        $("input[name='amount_pret']").TouchSpin({
             verticalbuttons: true,
             min:200000,
-            max:4999999,
+            max:5000000,
             step:10000,
+            buttondown_class: "btn btn-classic btn-outline-info",
+            buttonup_class: "btn btn-classic btn-outline-danger"
+        });
+        $("input[name='amount_trans_inter']").TouchSpin({
+            verticalbuttons: true,
+            max:10000000000,
+            buttondown_class: "btn btn-classic btn-outline-info",
+            buttonup_class: "btn btn-classic btn-outline-danger"
+        });
+
+        $("input[name='amount_trans_extra']").TouchSpin({
+            verticalbuttons: true,
+            max:10000000000,
             buttondown_class: "btn btn-classic btn-outline-info",
             buttonup_class: "btn btn-classic btn-outline-danger"
         });

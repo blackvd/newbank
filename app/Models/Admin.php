@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Transaction;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class Admin extends Authenticatable
 {
@@ -29,5 +30,9 @@ class Admin extends Authenticatable
     public function roles()
     {
         return $this->belongsTo(Role::class);
+    }
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'agent');
     }
 }

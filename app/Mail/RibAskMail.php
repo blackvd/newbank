@@ -2,21 +2,17 @@
 
 namespace App\Mail;
 
+use App\Models\Client;
+use App\Models\Compte;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use App\Models\Compte;
 
-class AccountOpenMail extends Mailable
+class RibAskMail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    /**
-     * The account instance
-     * 
-     * @var \App\Models\Compte
-     */
+    public $client;
     public $compte;
 
     /**
@@ -24,8 +20,9 @@ class AccountOpenMail extends Mailable
      *
      * @return void
      */
-    public function __construct(Compte $compte)
+    public function __construct(Client $client, Compte $compte)
     {
+        $this->client = $client;
         $this->compte = $compte;
     }
 
@@ -36,6 +33,6 @@ class AccountOpenMail extends Mailable
      */
     public function build()
     {
-        return $this->view('email.open_account')->subject("Ouverture de compte");
+        return $this->view('emails.rib')->subject("Demande du rib par mail");
     }
 }
