@@ -56,10 +56,33 @@
     <script src="{{asset('assets/js/custom.js')}}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
+    <script src="{{asset('assets/js/components/session-timeout/bootstrap-session-timeout.js')}}"></script>
+    
+    
+
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     @yield('scripts')
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
 
+    <script>
+        $.sessionTimeout({
+            message: 'Attention deconnexion utilisateur',
+            countdownMessage: 'Vous serez deconnecter dans {timer} seconds',
+            keepAliveUrl:"",
+            logoutUrl: '{{ route("admin.postLogout1") }}',
+            redirUrl: '/logout',
+            logoutButton: 'Deconnexion',
+            keepAliveButton: 'Restez ici',
+            ajaxType:'post',
+            warnAfter:60000,
+            redirAfter:1860000,
+            countdownBar:true,
+            countdownMessage: true,
+            onRedir: ()=>{
+                $("#logout-form").submit();
+            },
+        })
+    </script>
 </body>
 
 </html>
