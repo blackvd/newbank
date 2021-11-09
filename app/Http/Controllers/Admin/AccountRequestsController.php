@@ -31,7 +31,9 @@ class AccountRequestsController extends Controller
      */
     public function index()
     {
-        $clients = Client::all();
+        // $clients = Client::where('statut_ouverture_compte', "3")->get();
+        // dd($clients);
+        $clients = Client::whereBetween('statut_ouverture_compte', [-2, 2])->get();
         return view('admin.account_requests.index', [
             'clients' => $clients
         ]);

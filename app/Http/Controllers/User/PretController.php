@@ -95,7 +95,6 @@ class PretController extends Controller
             }
         }
         return redirect()->back()->with("success", "$client->civilite $client->nom $client->prenoms n'est pas eligible car est en train de rembourser un pret");
-        return redirect()->back();
     }
 
     public function accorder($id)
