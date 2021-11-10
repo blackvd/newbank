@@ -33,6 +33,9 @@ Route::get('/open-account', [OpenAccountController::class, 'index'])->name("new-
 Route::post('/open-account', [OpenAccountController::class, 'openAccount'])->name("open-account");
 Route::get('/open-account/success', [OpenAccountController::class, 'openAccountSuccess'])->name("open-account-success");
 
+Route::get('/logout', [LoginController::class, 'logout'])->name('logoutUser');
+
+
 Auth::routes();
 
 Route::post('/first-login', [App\Http\Controllers\Auth\LoginController::class, 'userFirstLogin'])->name('first_login');
