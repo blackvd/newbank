@@ -40,6 +40,9 @@ class OrderCardController extends Controller
         $compte = $client->comptes()->where("type_compte", "1")->first();
 
         // dd($compte->carte()->first());
+        if (is_null($compte)) {
+            return redirect('/')->with('attention', "Pas de carte disponible pour le moment");
+        }
         return view('user.order_card.cards', compact(['client', "compte"]));
     }
 

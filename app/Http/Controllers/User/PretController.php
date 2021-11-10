@@ -37,7 +37,7 @@ class PretController extends Controller
     private function validation($req)
     {
         $validator = Validator::make($req, [
-            'amount' => 'required',
+            'amount_pret' => 'required',
             'agence' => 'required',
             'reason' => 'required',
         ]);
@@ -49,8 +49,8 @@ class PretController extends Controller
         }
 
         $pret = Pret::create([
-            "montant" => $req['amount'],
-            "reste" => $req["amount"],
+            "montant" => $req['amount_pret'],
+            "reste" => $req["amount_pret"],
             "agence" => $req['agence'],
             "motif" => $req['reason'],
             "client_id" => $req['user'],
@@ -84,7 +84,7 @@ class PretController extends Controller
     {
         $client = Client::find($id);
         foreach ($client->comptes as $value) {
-            if ($value->type_compte == 1 && $value->solde == 0) {
+            if (($value->type_compte == 1 || $value->type_compte == 2) && $value->solde == 0) {
                 return redirect()->back()->with("echec", "$client->civilite $client->nom $client->prenoms n'est pas eligible car solde a zero");
             }
         }
@@ -94,7 +94,7 @@ class PretController extends Controller
                 return redirect()->back()->with("echec", "$client->civilite $client->nom $client->prenoms n'est pas eligible car est en train de rembourser un pret");
             }
         }
-        return redirect()->back()->with("success", "$client->civilite $client->nom $client->prenoms n'est pas eligible car est en train de rembourser un pret");
+        return redirect()->back()->with("success", "$client->civilite $client->nom $client->prenoms est eligible pour ");
     }
 
     public function accorder($id)
