@@ -76,7 +76,7 @@
             <li class="nav-item dropdown user-profile-dropdown order-lg-0 order-1">
                 <a href="javascript:void(0);" class="nav-link dropdown-toggle user" id="user-profile-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <div class="media">
-                        <img src="{{ substr($client->identification->photo,5)==".jpg" ? asset('userImage/'.$client->track_id.'/PHOTO.jpg') : asset('userImage/'.$client->track_id.'/PHOTO.png') }}" class="img-fluid" style="height: 40px;width: 40px;" alt="user">
+                        <img src="{{ substr($client->identification->photo,5)==".jpg" ? asset('storage/clients/pieces/'.$client->track_id.'/PHOTO.jpg') : asset('storage/clients/pieces/'.$client->track_id.'/PHOTO.png') }}" class="img-fluid" style="height: 40px;width: 40px;" alt="user">
                     </div>
                 </a>
                 <div class="dropdown-menu position-absolute" aria-labelledby="userProfileDropdown">
