@@ -74,15 +74,18 @@
                                     <span class="shadow-none badge badge-primary">
                                         EN ATTENTE
                                     </span>
-                                    @endif
-                                    @if ($item->statut == 2)
+                                    
+                                    @elseif($item->statut == 2)
                                     <span class="shadow-none badge badge-warning">
                                         LIVRAISON
                                     </span>
-                                    @endif
-                                    @if ($item->statut == 3)
+                                    @elseif($item->statut == 3)
                                     <span class="shadow-none badge badge-success">
                                         DELIVRÉ
+                                    </span>
+                                    @else
+                                    <span class="shadow-none badge badge-danger">
+                                        BLOQUER
                                     </span>
                                     @endif
                                 </td>

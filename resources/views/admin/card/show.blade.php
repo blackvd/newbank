@@ -39,9 +39,9 @@
                     <h3 class="">Informations</h3>
                     <div class="mt-2">
                         @if($client->statut_ouverture_compte == \App\Models\Client::STATUT['OUVERT'])
-                        <h6><span class="badge badge-success"> OUVERT </span></h6>
+                        <h6><span class="badge badge-success">Compte OUVERT </span></h6>
                         @else
-                        <h6><span class="badge badge-danger"> REJÉTÉ </span></h6>
+                        <h6><span class="badge badge-danger">Compte REJÉTÉ </span></h6>
                         @endif
                     </div>
                 </div>
