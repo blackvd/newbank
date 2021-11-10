@@ -65,7 +65,7 @@ class PretController extends Controller
 
     public function reject(String $trackId)
     {
-        $client = Client::where('track_id', $trackId)->first();
+        $client = Client::where('id', $trackId)->first();
         $pret = $client->prets()->latest()->first();
 
         $pret->statut = -1;
@@ -108,6 +108,6 @@ class PretController extends Controller
         // event par mail pour informer de l'accord du pret
         PretDone::dispatch($client);
 
-        redirect()->back()->with("success", "Le pret a ete accorder a $client->civilite $client->nom $client->prenoms");
+        return redirect()->back()->with("success", "Le pret a ete accorder a $client->civilite $client->nom $client->prenoms");
     }
 }

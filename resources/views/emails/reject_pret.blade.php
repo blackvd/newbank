@@ -235,7 +235,7 @@
 <div style="color:#052d3d;font-family:Lato, Tahoma, Verdana, Segoe, sans-serif;line-height:1.5;padding-top:20px;padding-right:10px;padding-bottom:0px;padding-left:15px;">
 <div class="txtTinyMce-wrapper" style="font-size: 12px; line-height: 1.5; font-family: Lato, Tahoma, Verdana, Segoe, sans-serif; color: #052d3d; mso-line-height-alt: 18px;">
 <p style="margin: 0; font-size: 50px; line-height: 1.5; text-align: center; word-break: break-word; mso-line-height-alt: 75px; margin-top: 0; margin-bottom: 0;"><span style="font-size: 50px;"><strong><span style="font-size: 50px;"><span style="font-size: 38px;">Cher/chère</span></span></strong></span></p>
-<p style="margin: 0; font-size: 34px; line-height: 1.5; text-align: center; word-break: break-word; mso-line-height-alt: 51px; margin-top: 0; margin-bottom: 0;"><span style="font-size: 34px;"><strong><span style="font-size: 34px;"><span style="color: #2190e3; font-size: 34px;">{{$compte->client->civilite}} {{$compte->client->nom}} {{$compte->client->prenoms}},</span></span></strong></span></p>
+<p style="margin: 0; font-size: 34px; line-height: 1.5; text-align: center; word-break: break-word; mso-line-height-alt: 51px; margin-top: 0; margin-bottom: 0;"><span style="font-size: 34px;"><strong><span style="font-size: 34px;"><span style="color: #2190e3; font-size: 34px;">{{$client->civilite}} {{ $client->nom}} {{$client->prenoms}},</span></span></strong></span></p>
 </div>
 </div>
 <!--[if mso]></td></tr></table><![endif]-->

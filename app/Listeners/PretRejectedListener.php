@@ -8,19 +8,21 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Mail\PretRejected as MailPretRejected;
 use App\Mail\PretRejectedMail;
+use App\Models\Client;
 
 class PretRejectedListener implements ShouldQueue
 {
     use InteractsWithQueue;
 
+    public $client;
     /**
      * Create the event listener.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Client $client)
     {
-        //
+        $this->client = $client;
     }
 
     /**
@@ -31,6 +33,7 @@ class PretRejectedListener implements ShouldQueue
      */
     public function handle(PretRejected $event)
     {
-        Mail::to($event->client->email)->send(new PretRejectedMail());
+        $client = $event->client;
+        Mail::to($event->client->email)->send(new PretRejectedMail($client));
     }
 }

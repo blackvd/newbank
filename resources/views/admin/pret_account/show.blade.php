@@ -60,9 +60,9 @@
                             @csrf
                         </form>
                         @elseif($client->statut_ouverture_compte == \App\Models\Client::STATUT['OUVERT'])
-                        <h6><span class="badge badge-success"> OUVERT </span></h6>
+                        <h6><span class="badge badge-success"> Compte OUVERT </span></h6>
                         @else
-                        <h6><span class="badge badge-danger"> REJÉTÉ </span></h6>
+                        <h6><span class="badge badge-danger"> Compte REJÉTÉ </span></h6>
                         @endif
                     </div>
                 </div>
@@ -209,7 +209,9 @@
                     </div>
 
                     <div class="form-group col-4">
-                        <input type="submit" class="btn btn-danger" value="Rejeter">
+                        <form action="{{ route('pret.reject',['id'=>$client->id]) }}" method="get" >
+                            <input type="submit" class="btn btn-danger" value="Rejeter">
+                        </form>
                     </div>
                 </div>
 

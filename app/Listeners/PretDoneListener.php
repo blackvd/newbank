@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\PretDone;
 use App\Mail\PretDoneMail;
 use App\Events\PretRejected;
 use Illuminate\Support\Facades\Mail;
@@ -23,11 +24,12 @@ class PretDoneListener
     /**
      * Handle the event.
      *
-     * @param  PretRejected  $event
+     * @param  PretDone  $event
      * @return void
      */
-    public function handle(PretRejected $event)
+    public function handle(PretDone $event)
     {
-        Mail::to($event->client->email)->send(new PretDoneMail());
+        $client = $event->client;
+        Mail::to($event->client->email)->send(new PretDoneMail($client));
     }
 }

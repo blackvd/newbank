@@ -96,7 +96,7 @@
         
                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
                                                 <a class="dropdown-item">Détails</a>
-                                                <a class="dropdown-item" href="{{route('pret.reject', $client->track_id)}}">Rejeter</a>
+                                                <a class="dropdown-item" href="{{route('pret.reject', $client->id)}}">Rejeter</a>
                                                 <a class="dropdown-item" href="{{route('pret.show', $client->track_id)}}">Détails</a>
                                             </div>
                                         </div>

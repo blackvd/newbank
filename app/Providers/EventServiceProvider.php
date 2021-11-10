@@ -7,6 +7,7 @@ use App\Events\CompteOpened;
 use App\Events\CompteBlocked;
 use App\Events\CompteRejected;
 use App\Events\ClientRegistered;
+use App\Events\PretDone;
 use App\Events\PretRejected;
 use App\Listeners\CardBlockListener;
 use Illuminate\Support\Facades\Event;
@@ -14,6 +15,7 @@ use Illuminate\Auth\Events\Registered;
 use App\Listeners\CompteOpenedListener;
 use App\Listeners\SendEmailNotification;
 use App\Listeners\CompteRejectedListener;
+use App\Listeners\PretDoneListener;
 use App\Listeners\PretRejectedListener;
 use App\Listeners\SendBlockedNotification;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -46,6 +48,7 @@ class EventServiceProvider extends ServiceProvider
             PretRejectedListener::class
         ],
         CardBlock::class => [CardBlockListener::class,],
+        PretDone::class => [PretDoneListener::class,],
     ];
 
     /**
