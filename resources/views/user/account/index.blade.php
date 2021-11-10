@@ -289,8 +289,7 @@
     <script src="https://cdn.jsdelivr.net/npm/axios@0.22.0/dist/axios.min.js"></script>
     <script src="{{ asset('assets/js/operation.js') }}"></script>
     <script>
-        $("#account_credit").inputmask({mask:"CI221019999999999"});
-
+        {{--  $("#account_credit").inputmask({mask:"CI2210199999999999999999"});  --}}
         var period = flatpickr($("#period"), {
         mode: 'range',
         })
