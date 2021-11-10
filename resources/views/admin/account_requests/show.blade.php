@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="text-center user-info">
-                    <img src="{{ substr($client->identification->photo,5)==".jpg" ? asset('userImage/'.$client->track_id.'/PHOTO.jpg') : asset('userImage/'.$client->track_id.'/PHOTO.png') }}" style="height: 150px; width: 150px;" alt="avatar">
+                    <img src="{{ substr($client->identification->photo,5)==".jpg" ? asset('storage/clients/pieces/'.$client->track_id.'/PHOTO.jpg') : asset('storage/clients/pieces/'.$client->track_id.'/PHOTO.png') }}" style="height: 150px; width: 150px;" alt="avatar">
                     <p class="">{{$client->nom}} {{$client->prenoms}}</p>
                 </div>
 
